@@ -1,3 +1,16 @@
+---
+title: CWA AI Knowledge Hub
+emoji: 🌏
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+license: mit
+hardware: zero-a10g
+---
+
 # 氣象署 AI 應用學習與自動化知識轉化計畫 (CWA-AI-Knowledge-Hub)
 
 ## 0. 專案目標與 Agent 身分
