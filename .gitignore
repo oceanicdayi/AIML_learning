@@ -1,0 +1,16 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Raw data (large PDFs — not for git)
+**/raw_data/
+downloads/
+
+# Build artifacts
+_site/
+*.log
+node_modules/

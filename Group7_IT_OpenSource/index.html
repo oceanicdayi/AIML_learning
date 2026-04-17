@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資訊系統與開源環境 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">🖥️ 資訊系統與開源環境</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組 7（原分組 6）— 資訊系統與開源環境：高速運算電腦科普篇</h1>
+<blockquote class="my-4"><strong>講者</strong>：莊惟然（數值資訊組）<br><strong>頁數</strong>：14<br><strong>原始檔案</strong>：<code>raw_data/分組6_資訊系統與開源環境.pdf</code></blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">1 什麼是高速運算電腦（HPC）？</h2>
+</div>
+<p class="my-3 leading-relaxed"><strong>High Performance Computing（HPC）</strong> 的核心特性：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>由多個計算節點組成，進行<strong>平行運算</strong></li>
+  <li>每個節點擁有自己的處理器、記憶體與儲存空間</li>
+  <li>提供比單一桌面或伺服器更高的效能</li>
+  <li><strong>優勢</strong>：短時間內處理及分析大量資料</li>
+  <li><strong>算力單位</strong>：PFlops（Peta Floating-point Operations Per Second）</li>
+</ul>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">1.1 應用領域</h3>
+<p class="my-3 leading-relaxed">大氣科學、物理、化學、數學、工程、生命科學、醫療</p>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">1.2 臺灣自建 HPC 設施</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>單位</th><th>設施名稱</th></tr>
+<tr><td>中央氣象署</td><td><strong>第 6 代高速運算電腦</strong></td></tr>
+<tr><td>國家高速網路中心</td><td>晶創 26、臺灣杉二號（TAIWANIA 2）、台灣杉三號（Taiwania 3）、創進一號</td></tr>
+<tr><td>NVIDIA</td><td>Taipei-1（高雄軟體園區）</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">2 HPC 於氣象領域的應用</h2>
+</div>
+<pre><code class="language-">氣象方程式 → 超級電腦運算 → 預估大氣變化
+   (表達)         (運算)         (預估)
+</code></pre>
+<p class="my-3 leading-relaxed">HPC 是數值天氣預報（NWP）的基石 — 將大氣物理方程式離散化後，以巨量格點進行數值積分。</p>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">3 HPC 四大核心系統</h2>
+</div>
+<pre><code class="language-">
+### 3.1 運算單元：CPU vs GPU
+
+| 特性 | CPU（全能型工程師） | GPU（超多工工人團隊） |
+|------|---------------------|----------------------|
+| 擅長 | 分支預測、條件判斷、複雜演算法、序列計算 | 大規模平行運算、矩陣/向量計算 |
+| 用途 | 協調整體系統運作 | AI 模型訓練與推論、科學模擬、圖像處理 |
+| 角色 | 處理複雜邏輯 | 專注大量平行運算 |
+
+### 3.2 高速網路：6 大 I/O 介面
+
+AI 驅動資料中心 I/O 加速進化，6 大 I/O 介面同步世代交替（ITHOME 報導）。
+
+### 3.3 儲存系統：三層架構
+
+| 層級 | 技術 | 特性 |
+|------|------|------|
+| **高速暫存層** | SSD / NVMe 快閃記憶體 | 數 GB/s 讀寫；儲存熱資料與頻繁存取檔案 |
+| **快取層** | 中間緩衝層 | 平衡速度與容量，確保存取流暢 |
+| **大容量儲存層** | 硬碟陣列 / 磁帶系統 | PB 級容量；長期保存原始資料、歷史紀錄與備份 |
+
+整體儲存能力：
+
+| 指標 | 數值 |
+|------|------|
+| 平行存取 | 支援數千節點同時讀寫 |
+| 讀寫速度 | 高達 TB/s |
+| 總容量 | 數 PB 至數十 PB |
+| 資料保護 | 多重備份與錯誤修正 |
+
+### 3.4 冷卻系統：浸沒式液冷
+
+- **核心機制**：將伺服器整機或關鍵元件直接浸泡在絕緣冷卻液中
+- 適用對象：高功耗 HPC、高效能 GPU、AI 伺服器
+- **優點**：
+  - 降低機房空調需求，減少 **PUE**（Power Usage Effectiveness）
+  - 降低噪音、減少機械風扇故障
+  - 延長硬體壽命、提升穩定度
+
+---
+
+## 4 本署高速運算電腦發展歷程
+
+氣象署歷經多代 HPC 升級，從早期系統演進至現行第 6 代高速運算電腦。
+
+---
+
+## 5 第 6 代高速運算電腦規格
+
+### 5.1 CPU 區
+
+| 項目 | 規格 |
+|------|------|
+| CPU | 台積電 7 nm 製程 **Arm 架構 A64FX** 2.2 GHz / 48 Core |
+| 節點數 | 384 Node × 15 櫃 → **5,760 顆 CPU** |
+| 算力 | **10 PFlops** |
+| 互連 | TofuD（6-Mesh/Torus） |
+| 記憶體總量 | 180 TiB |
+
+### 5.2 GPU 區
+
+| 項目 | 規格 |
+|------|------|
+| GPU | **NVIDIA A100** |
+| 數量 | 24 台 × 8 張 = **192 張** |
+| 算力 | **2 PFlops** |
+| 互連 | InfiniBand HDR200 |
+| 網路 | 100 Gbps Ethernet |
+
+### 5.3 高速網路
+
+- NVIDIA InfiniBand 200G × 18 台
+- 串接 CPU 與 GPU 於 DDN 上
+
+### 5.4 儲存平台
+
+- **FEFS + DDN 儲存系統**
+- Storage Capacity：1 PB × 10 台 OSS/OST
+- 提供高效能及高擴展性
+
+### 5.5 冷卻
+
+- **CDU 水冷分熱交換器**
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph TD
+    HPC[高速運算電腦] --> A[運算單元<br/>CPU + GPU]
+    HPC --> B[高速網路<br/>節點間即時交換資料]
+    HPC --> C[儲存平台<br/>輸入/中間/輸出資料]
+    HPC --> D[冷卻系統<br/>維持溫度穩定]
+</div>
+graph LR
+    subgraph CPU區
+        A[Arm A64FX × 5,760&lt;br/&gt;10 PFlops&lt;br/&gt;TofuD 互連]
+    end
+    subgraph GPU區
+        B[NVIDIA A100 × 192&lt;br/&gt;2 PFlops&lt;br/&gt;InfiniBand HDR200]
+    end
+    subgraph 儲存
+        C[DDN FEFS&lt;br/&gt;10 PB&lt;br/&gt;TB/s 吞吐]
+    end
+    subgraph 冷卻
+        D[CDU 水冷&lt;br/&gt;熱交換器]
+    end
+    A &lt;--&gt;|InfiniBand 200G| C
+    B &lt;--&gt;|InfiniBand 200G| C
+    D -.-&gt; A
+    D -.-&gt; B
+</code></pre>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">6 詞彙表</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>縮寫</th><th>全稱</th><th>中文</th></tr>
+<tr><td>HPC</td><td>High Performance Computing</td><td>高速運算電腦</td></tr>
+<tr><td>PFlops</td><td>Peta Floating-point Operations Per Second</td><td>每秒千兆次浮點運算</td></tr>
+<tr><td>CPU</td><td>Central Processing Unit</td><td>中央處理器</td></tr>
+<tr><td>GPU</td><td>Graphics Processing Unit</td><td>圖形處理器</td></tr>
+<tr><td>NVMe</td><td>Non-Volatile Memory Express</td><td>非揮發性記憶體快速存取協定</td></tr>
+<tr><td>SSD</td><td>Solid State Drive</td><td>固態硬碟</td></tr>
+<tr><td>PUE</td><td>Power Usage Effectiveness</td><td>電源使用效率</td></tr>
+<tr><td>InfiniBand</td><td>—</td><td>高頻寬低延遲互連技術</td></tr>
+<tr><td>TofuD</td><td>—</td><td>Fujitsu 6-Mesh/Torus 互連拓撲</td></tr>
+<tr><td>DDN</td><td>DataDirect Networks</td><td>高效能儲存供應商</td></tr>
+<tr><td>FEFS</td><td>Fujitsu Exabyte File System</td><td>富士通 EB 級檔案系統</td></tr>
+<tr><td>OSS/OST</td><td>Object Storage Server / Target</td><td>物件儲存伺服器 / 目標</td></tr>
+<tr><td>CDU</td><td>Coolant Distribution Unit</td><td>冷卻液分配單元</td></tr>
+<tr><td>A64FX</td><td>—</td><td>Fujitsu Arm 架構 HPC 處理器</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">7 總結摘要</h2>
+</div>
+<p class="my-3 leading-relaxed">本簡報由數值資訊組莊惟然介紹 HPC 科普知識與氣象署第 6 代高速運算電腦。HPC 由四大核心系統組成：<strong>運算單元</strong>（CPU 處理複雜邏輯 + GPU 大量平行運算）、<strong>高速網路</strong>（InfiniBand 200G 互連）、<strong>儲存平台</strong>（三層架構：NVMe 暫存 → 快取 → PB 級大容量）、<strong>冷卻系統</strong>（浸沒式液冷降低 PUE）。</p>
+<p class="my-3 leading-relaxed">氣象署第 6 代 HPC 採用 Arm 架構 A64FX 處理器 5,760 顆（10 PFlops）搭配 192 張 NVIDIA A100 GPU（2 PFlops），總算力達 <strong>12 PFlops</strong>，儲存容量 10 PB，是數值天氣預報與 AI 模型訓練的運算基石。</p>
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>

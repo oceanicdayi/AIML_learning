@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 人才培育 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">🎓 AI 人才培育</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組 8 — AI 人才培育：導航氣象 AI 新時代</h1>
+<blockquote class="my-4"><strong>單位</strong>：交通部中央氣象署 AI 技術應用小組<br><strong>日期</strong>：2026-04-15<br><strong>頁數</strong>：11<br><strong>原始檔案</strong>：<code>raw_data/分組八_AI人才培育0415.pdf</code>（圖片式 PDF，無可提取文字）</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">1 核心理念</h2>
+</div>
+<blockquote class="my-4"><strong>機器建構未來，但「人」才是核心。</strong></blockquote>
+<p class="my-3 leading-relaxed">氣象署正積極佈建 HPC 與超級電腦環境，然而最強大的算力若無具備 AI 視角的人才驅動，便無法發揮價值。分組八的唯一使命：<strong>確保您在氣象 AI 轉型中不被落下。</strong></p>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">1.1 分組八在整體架構中的定位</h3>
+<p class="my-3 leading-relaxed">分組八「人工智慧技術人才培育」居於核心樞紐位置，連接周邊各業務面向：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>天氣預報模型</li>
+  <li>資料整集與重建</li>
+  <li>軟硬體基礎建設</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">2 三大培育目標</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>#</th><th>目標</th><th>說明</th></tr>
+<tr><td>01</td><td><strong>精準賦能</strong></td><td>透由專業資訊團隊，規劃符合本署業務發展所需的 AI 技能</td></tr>
+<tr><td>02</td><td><strong>跨域突破</strong></td><td>提供多元技術課程參訓機會，突破現有氣象思維框架</td></tr>
+<tr><td>03</td><td><strong>接軌前沿</strong></td><td>廣泛吸收前瞻 AI 新知，定期舉辦趨勢專題演講，提升科技視野</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">3 四大培訓管道</h2>
+</div>
+<pre><code class="language-">
+### 3.1 策略 — 培訓藍圖
+
+參照數發部 AI 學習地圖，研擬氣象署專屬教育訓練計畫。
+
+### 3.2 內訓 — 專業氣象 AI 課程
+
+邀請臺大等頂尖學者入署，提供從基礎到實作的系統性長程培訓。
+
+### 3.3 交流 — 實例分享會
+
+跨單位的 AI 實際導入經驗與失敗學習分享。
+
+### 3.4 外訓 — 外部資源鏈結
+
+全額補助參與外部專業訓練及大型論壇，探索技術落地應用。
+
+---
+
+## 4 AI 角色定位：尋找你的學習路徑
+
+&gt; **您不需要學會所有技術！依照您的業務角色，選擇最精準的學習路徑。**
+
+| 角色 | 職責定位 | 所需技能 |
+|------|---------|---------|
+| **規劃者** | 藍圖規劃、治理風險、跨部門落地 | AI 素養、政策評估、公共創新實驗 |
+| **應用者** | 日常業務提效、資料處理、流程優化 | 工具場景導入、基礎資料治理、服務升級 |
+| **開發者** | 模型開發、委外規格撰寫、MLOps | AI/ML 應用開發實務、資安與合規 |
+
+---
+
+## 5 內訓課程路線圖：五站式學習旅程
+
+**師資陣容**：臺大天災中心 陳柏孚博士等頂尖學者  
+**特色**：結合氣象真實數據（衛星、雷達）進行實機操作
+
+| 站別 | 主題 | 內容 |
+|------|------|------|
+| Station 1 | **啟蒙** | AI 概論、機器學習與神經網路基礎 |
+| Station 2 | **視覺** | CNN 訓練與雷達降水估計實作 |
+| Station 3 | **生成** | U-Net、GAN 與時間序列預測 |
+| Station 4 | **前沿** | Transformer、全球資料導向天氣預報（DWP） |
+| Station 5 | **實戰** | 雲端 AI 模型推論、FCNv2 多模型優化實作 |
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+quadrantChart
+    title 四大培訓管道
+    x-axis 內部 --> 外部
+    y-axis 策略層 --> 執行層
+    策略-培訓藍圖: [0.2, 0.8]
+    內訓-專業氣象AI課程: [0.8, 0.8]
+    交流-實例分享會: [0.2, 0.2]
+    外訓-外部資源鏈結: [0.8, 0.2]
+</div>
+graph LR
+    S1[Station 1&lt;br/&gt;啟蒙&lt;br/&gt;AI 概論] --&gt; S2[Station 2&lt;br/&gt;視覺&lt;br/&gt;CNN + 雷達]
+    S2 --&gt; S3[Station 3&lt;br/&gt;生成&lt;br/&gt;U-Net + GAN]
+    S3 --&gt; S4[Station 4&lt;br/&gt;前沿&lt;br/&gt;Transformer + DWP]
+    S4 --&gt; S5[Station 5&lt;br/&gt;實戰&lt;br/&gt;雲端推論 + FCNv2]
+</code></pre>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">6 外訓與線上資源</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">6.1 線上微學習</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>項目</th><th>內容</th></tr>
+<tr><td>平台</td><td>e 等公務園、數發部數位人才平臺</td></tr>
+<tr><td>主題</td><td>Prompt 提示語實戰、生成式 AI 應用（簡報設計、影片創作、圖像生成）</td></tr>
+<tr><td>特色</td><td>適合零碎時間快速充電</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">6.2 實體大視野</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>項目</th><th>內容</th></tr>
+<tr><td>課程</td><td>派訓參與外部專業 AI 訓練課程</td></tr>
+<tr><td>活動</td><td>參加國內氣象論壇，或參與 AI 相關講習</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">7 跨域交流：從做中學的 AI 文化</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">AI 實例分享會</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>面向</th><th>說明</th></tr>
+<tr><td><strong>真實案例</strong></td><td>從地震測報到雷達觀測，分享實際導入 AI 技術的業務經驗</td></tr>
+<tr><td><strong>痛點解析</strong></td><td>不只談成功，更探討資料前處理、模型選擇的真實挑戰</td></tr>
+<tr><td><strong>頻率</strong></td><td>每季定期辦理，促進署內不同科室的技術思維碰撞</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-6" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">8 Insight Dashboard — 課程成效</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>指標</th><th>數值</th></tr>
+<tr><td>課程整體滿意度</td><td><strong>100%</strong></td></tr>
+<tr><td>講師授課滿意度</td><td><strong>94%</strong></td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">學員最看重的內容（The Core Value）</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>主題</th><th>比例</th></tr>
+<tr><td>神經網路基礎</td><td>61%</td></tr>
+<tr><td>概論與簡介</td><td>56%</td></tr>
+<tr><td>機器學習</td><td>50%</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">學員回饋與未來展望（The Horizon）</h3>
+<p class="my-3 leading-relaxed">學員期望增加：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>「觀測資料 QC 案例」</li>
+  <li>「AI 模型選擇策略」</li>
+  <li>「非氣象領域應用」</li>
+</ul>
+<blockquote class="my-4"><strong>Update：分組八已納入 115 年規劃！</strong></blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-7" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">9 114–115 年路線圖</h2>
+</div>
+<pre><code class="language-">
+| 時程 | 硬體與資料 | 人才與裝備 |
+|------|----------|----------|
+| Year 114 | 新竹氣象園區機房建置 | 辦理 AI 應用工具實機訓練 |
+| Year 115 | AI 資源池啟用與 LLM 導入 → 建構氣象觀測 AI-Ready Data | 持續培訓 |
+
+### 專屬您的第一站
+
+- **活動**：新進同仁認識本署業務應用 AI 現況
+- **時間**：115 年 4/20 – 4/21
+- **亮點**：全貌理解 CWA 轉型地圖，與各業務分組長面對面交流
+
+---
+
+## 10 您的專屬行動清單
+
+| ☐ | 行動 | 說明 |
+|---|------|------|
+| ☐ | **定位自我** | 確認自己在新崗位上是「規劃者」、「應用者」還是「開發者」 |
+| ☐ | **踏出首步** | 登入「e 等公務員」，完成一堂 10 分鐘的 Generative AI 微課程 |
+| ☐ | **標記行事曆** | 預留 115 年 4/20–21，參加新進同仁 AI 專屬訓練營 |
+| ☐ | **開啟對話** | 與您的主管討論業務中潛在的 AI 應用場景 |
+
+&gt; **歡迎登艦，與分組八一同導航氣象 AI 新時代！**
+
+---
+
+## 11 詞彙表
+
+| 縮寫 | 全稱 | 中文 |
+|------|------|------|
+| HPC | High Performance Computing | 高速運算電腦 |
+| MLOps | Machine Learning Operations | 機器學習維運 |
+| DWP | Data-driven Weather Prediction | 資料導向天氣預報 |
+| FCNv2 | FourCastNet v2 | NVIDIA 全球天氣 AI 模型 |
+| CNN | Convolutional Neural Network | 卷積神經網路 |
+| GAN | Generative Adversarial Network | 生成對抗網路 |
+| LLM | Large Language Model | 大型語言模型 |
+| CWA | Central Weather Administration | 中央氣象署 |
+| QC | Quality Control | 品質管控 |
+
+---
+
+## 12 總結摘要
+
+本簡報由氣象署 AI 技術應用小組介紹分組八「AI 人才培育」的整體規劃。核心理念為「機器建構未來，但人才是核心」，提出三大目標（精準賦能、跨域突破、接軌前沿）與四大培訓管道（策略藍圖、內訓課程、實例分享會、外訓資源）。
+
+內訓課程設計為五站式學習旅程（啟蒙→視覺→生成→前沿→實戰），由臺大陳柏孚博士等頂尖學者授課，結合氣象真實數據實機操作。課程成效顯著（整體滿意度 100%、講師滿意度 94%）。同時依據人員角色（規劃者/應用者/開發者）區分學習路徑，搭配線上微學習平台與外部論壇派訓，構建完整的 AI 人才培育生態系。115 年規劃將持續推進 AI 資源池、LLM 導入與 AI-Ready Data 建構。
+
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+.env
+.env.example
+.venv/
+.git/
+.github/
+__pycache__/
+scripts/
+**/raw_data/
+downloads/
+Dockerfile
+.dockerignore
+.gitignore
+*.pyc
+*.log
+node_modules/

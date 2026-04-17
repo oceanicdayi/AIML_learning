@@ -1,0 +1,60 @@
+front,back,tags
+NWP (Numerical Weather Prediction),基於物理方程式的數值天氣預報，將大氣離散化後以超級電腦求解偏微分方程。優點：物理一致性強；缺點：計算成本高、解析度受限。,Group1_預報模型
+MLWP (Machine Learning Weather Prediction),以機器學習取代或輔助 NWP 的新一代天氣預報方法。代表模型：Pangu-Weather、GraphCast、GenCast。訓練資料通常使用 ERA5 再分析場。,Group1_預報模型
+Pangu-Weather,華為提出的第一代 AI 天氣預報模型 (2023)，基於 3D Earth-specific Transformer，解析度 0.25°，推論只需秒級。首次在颱風路徑預報中超越 NWP。,Group1_預報模型
+GraphCast,Google DeepMind 開發的圖神經網路天氣預報模型，使用 Graph Neural Network (GNN) 在 icosahedral mesh 上運算，10 天預報僅需 1 分鐘。,Group1_預報模型
+GenCast,DeepMind 的機率式天氣預報模型，基於 Diffusion Model 架構，能生成系集預報 (ensemble)，提供不確定性估計。,Group1_預報模型
+FourCastNet (FCNv2),NVIDIA 開發的天氣預報模型，基於 Adaptive Fourier Neural Operator (AFNO)，極快推論速度。CWA 人才培育課程中亦用作教學範例。,Group1_預報模型
+NeuralGCM,Hybrid AI + 物理模型，將 ML 模組嵌入傳統 GCM 框架，兼具物理可解釋性與 AI 效能。,Group1_預報模型
+Aurora,微軟提出的基石模型 (foundation model)，支援多種大氣/海洋預報任務，具備跨尺度遷移學習能力。,Group1_預報模型
+ERA5,ECMWF 產生的第五代全球大氣再分析資料集，解析度約 31 km (0.25°)，時間跨度 1940 年至今。是 MLWP 模型最常用的訓練資料。,Group1_資料集
+BMA (Bayesian Model Averaging),貝氏模型平均法，以機率加權方式整合多個預報模型的輸出，產出校正後的機率預報。CWA 用於季節氣候預報。,Group2_統計方法
+CorrDiff,NVIDIA 提出的 AI 降尺度模型，基於擴散模型 (Diffusion Model) 架構，可將 25 km 解析度降至 2 km。CWA 與 NVIDIA 合作中。,Group2_降尺度
+TReAD (Taiwan Re-Analysis Downscaling),臺灣區域再分析降尺度資料集，解析度 2 km，時間跨度 45 年，提供高解析度歷史氣候參考。,Group2_資料集
+TaiSA (Taiwan Station-based Analysis),臺灣測站分析資料集，解析度 1 km，時間跨度 25 年，基於測站觀測內插產生。,Group2_資料集
+YOLO (You Only Look Once),即時物件偵測演算法。CWA 分組二應用於海岸異常波浪 (rogue wave) 的影像辨識，速度比傳統方法快 10-100 倍。,Group2_物件偵測
+異常波浪 (Rogue Wave),海面突然出現的超大波浪（波高超過有效波高 2 倍），極具破壞力。CWA 已建置 21 站監測、16 套預報系統，高風險命中率 >90%。,Group2_海象
+DLTC (Deep Learning Typhoon Center),基於深度學習的颱風中心定位技術，整合多源衛星與雷達資料。,Group3_颱風
+TCSA,颱風結構分析系統，用於自動化評估颱風強度與結構參數。,Group3_颱風
+QPN (Quantitative Precipitation Nowcasting),定量降水即時預報，利用雷達回波外推或 AI 模型預測未來 0-6 小時降水。CWA 開發 MIMQPN、DeepQPF 等系統。,Group3_即時預報
+Nested-Unet,U-Net 的改良版本，加入密集跳接 (dense skip connection)，在醫學影像及氣象降水預報中表現優異。CWA 用於 QPN。,Group3_模型架構
+Swin-Transformer,基於移位窗口 (Shifted Window) 的視覺 Transformer，具有線性計算複雜度。CWA 用於降水預報與後處理。,Group3_模型架構
+GAN (Generative Adversarial Network),生成對抗網路，由生成器與判別器對抗訓練。CWA 用於預報場降尺度、偏差校正、雷達回波預報。,Group3_模型架構
+WEPS-AI,Weather Ensemble Prediction System + AI，CWA 開發的 AI 輔助系集預報系統。,Group3_預報系統
+EEW (Earthquake Early Warning),地震預警系統，偵測 P 波後在破壞性 S 波到達前發出警報。CWA 目標：報告時效 < 10 秒。,Group4_地震
+P 波 (Primary Wave),地震體波之一，速度最快（約 5-8 km/s），為縱波。EEW 系統首先偵測 P 波以估計震源。,Group4_地震
+S 波 (Secondary Wave),地震體波之一，速度較慢（約 3-5 km/s），為橫波。破壞力遠大於 P 波，是 EEW 要搶先預警的目標。,Group4_地震
+Phase Picking,波相辨識，利用 AI 自動辨識地震波形中 P 波與 S 波的到時。CWA 已達可上線水準。,Group4_地震
+CWBSN (Central Weather Bureau Seismic Network),中央氣象署地震觀測網，包含約 550 個測站，是臺灣 EEW 的核心觀測基礎。,Group4_觀測網
+TSMIP (Taiwan Strong Motion Instrumentation Program),臺灣強震儀觀測計畫，部署於全島的強震測站網路，提供加速度觀測資料。,Group4_觀測網
+邊緣運算 (Edge Computing),將 AI 模型部署在終端設備（如地震站）上就地運算，減少資料傳輸延遲。CWA 地震預警的未來方向。,Group4_部署
+SCIT (Storm Cell Identification and Tracking),雷達對流胞辨識與追蹤演算法。CWA 分組五以 3D CNN 進行優化。,Group5_雷達
+DGMR (Deep Generative Model of Radar),DeepMind 開發的雷達回波生成預報模型，基於 GAN 架構。CWA 應用於日射量預報。,Group5_預報模型
+MOE (Mixture of Experts),混合專家模型架構，根據輸入動態選擇部分子模型推論，提升效率。CWA 用於衛星降水估計。,Group5_模型架構
+Diffusion Model,擴散模型，透過逐步加噪再去噪的過程生成高品質輸出。CWA 用於雷達回波預報與降尺度 (CorrDiff)。,Group5_模型架構
+ConvLSTM,結合卷積運算與 LSTM 時序記憶的模型，適用於時空序列預報（如雷達回波外推）。,Group5_模型架構
+trajGRU (Trajectory GRU),改良版 ConvLSTM，學習動態位移向量而非固定卷積核，更適合追蹤移動天氣系統。,Group5_模型架構
+NowcastNet,即時預報網路，能在 0-6 小時尺度產出高解析度降水預報。,Group5_即時預報
+QPEplus,中央氣象署定量降水估計加強版系統，整合雷達與雨量站觀測。,Group5_觀測系統
+Sobel 邊緣檢測,基於梯度的影像處理演算子，偵測影像中的邊緣。CWA 用於全天空照像儀判斷低能見度。,Group5_影像處理
+CRPS (Continuous Ranked Probability Score),連續等級機率分數，評估機率預報品質的標準指標。數值越低表示預報技巧越好。,Group5_評估指標
+Gaussian KDE (Kernel Density Estimation),高斯核密度估計，非參數方法估計機率密度函數。CWA 用於颱風中心定位的不確定性估計。,Group5_統計方法
+HPC (High-Performance Computing),高速運算 / 超級電腦，使用大量處理器並行計算。CWA 第 6 代 HPC 達 12 PFlops。,Group7_基礎設施
+PFlops (PetaFLOPS),每秒 10^15 次浮點運算。CWA 第 6 代 HPC：CPU 區 10 PFlops + GPU 區 2 PFlops = 12 PFlops。,Group7_基礎設施
+A64FX,富士通 (Fujitsu) 開發的 Arm 架構處理器 (7nm)，用於日本「富岳」超算及 CWA 第 6 代 HPC CPU 區，共 5760 顆。,Group7_硬體
+NVIDIA A100,NVIDIA 安培架構 GPU，CWA 第 6 代 HPC GPU 區配置 192 張，專攻 AI 訓練與推論。,Group7_硬體
+InfiniBand,高速低延遲互連網路技術，CWA HPC 使用 200 Gb/s HDR InfiniBand。,Group7_網路
+TofuD,富士通開發的互連拓撲 (6D Mesh/Torus)，用於 A64FX CPU 間的高效通訊。,Group7_網路
+浸沒式液冷 (Immersion Cooling),將伺服器浸入不導電液體中散熱，降低 PUE 與噪音。CWA 第 6 代 HPC 採用此技術。,Group7_散熱
+PUE (Power Usage Effectiveness),資料中心能源效率指標，= 總用電 / IT 設備用電。理想值趨近 1.0，CWA 採液冷以降低 PUE。,Group7_指標
+MLOps,Machine Learning Operations，涵蓋 ML 模型的開發、部署、監控、再訓練全生命週期管理。CWA 人才培育課程涵蓋此主題。,Group8_工程實踐
+DWP (Data-driven Weather Prediction),資料驅動天氣預報，CWA 培訓課程第四站主題，學員學習以資料驅動方法建構天氣預報模型。,Group8_預報方法
+CNN (Convolutional Neural Network),卷積神經網路，擅長處理空間結構資料（影像、雷達場）。CWA 培訓第二站核心內容。,Group8_模型架構
+U-Net,編碼器—解碼器架構加跳接連接，原為醫學影像分割設計，廣泛用於氣象場預報。CWA 培訓第三站教學。,Group8_模型架構
+Transformer,基於自注意力機制 (Self-Attention) 的模型架構，能捕捉長距離依賴關係。已成為 MLWP 主流骨幹。,Group8_模型架構
+AI-Ready Data,經過品質控制、標準化、標註的資料，可直接用於 AI 訓練。CWA 115 年目標：建構觀測資料 AI 化。,Group8_資料
+Continual Learning,持續學習 / 增量學習，模型在部署後持續吸收新資料更新，避免災難性遺忘。CWA 衛星降水估計採用。,Group5_訓練策略
+系集預報 (Ensemble Forecasting),以多組初始條件或多個模型進行預報，產出機率分布而非單一確定值，量化預報不確定性。,Group1_預報方法
+降尺度 (Downscaling),將粗解析度（如 25 km）預報場轉換為細解析度（如 2 km），包含動力降尺度與統計/AI 降尺度。,Group2_後處理
+前處理 (Pre-processing),AI 預報的資料準備階段，包含品質控制、缺值填補、標準化、格點化等步驟。,Group3_資料處理
+後處理 (Post-processing),對 NWP 或 AI 原始預報進行偏差校正、降尺度、機率校準等修正，提升預報品質。,Group3_資料處理

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天氣預報與預警應用技術 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">⚡ 天氣預報與預警應用技術</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組三：天氣預報與預警應用技術</h1>
+<blockquote class="my-4"><strong>講者</strong>：<br>- 預報中心：黃椿喜主任、劉品妍科長、蕭純珉、黃俊翰<br>- 科技發展組：張保亮組長、陳新淦科長、劉正欽、林宜霖<br>- 合作廠商：台大陳柏孚博士團隊、多采科技<br><br><strong>時段</strong>：2026/04/20（下午）<br><strong>來源</strong>：<code>20260420_新進同仁AI教育訓練-天氣預報與預警應用技術.pptx</code>（26 頁）</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">1. 分組任務總覽</h2>
+</div>
+<p class="my-3 leading-relaxed">本分組由預報中心與科技發展組共同負責，涵蓋五大任務：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>#</th><th>任務</th></tr>
+<tr><td>1</td><td>發展 AI/ML 應用於<strong>颱風分析及預報</strong>的作業技術</td></tr>
+<tr><td>2</td><td>發展 AI/ML 應用於<strong>極短期天氣預警</strong>的作業技術</td></tr>
+<tr><td>3</td><td>應用與作業化<strong>資料驅動天氣預報 (MLWP)</strong> 模型</td></tr>
+<tr><td>4</td><td>發展 AI/ML 應用於<strong>數值模式預報的後處理加值</strong>技術及產品</td></tr>
+<tr><td>5</td><td>評估資料驅動天氣預報 (MLWP) 模型及其<strong>後處理技術</strong>發展</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">2. AI 預報百問——六大核心問答</h2>
+</div>
+<p class="my-3 leading-relaxed">簡報以 Q&amp;A 方式串聯，以下逐一整理：</p>
+<hr class="border-slate-700 my-8">
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">Q1: AI 有多厲害？預報員現在都在用 AI 報天氣嗎？</h3>
+<p class="my-3 leading-relaxed"><strong>結論</strong>：MLWP 模型與 AI 降尺度、後處理、颱風路徑預報等，已是<strong>不可或缺的客觀預報指引</strong>。預報員會參考所有預報指引（包含傳統 NWP 與 AI），發布最終預報。</p>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">颱風路徑預報成果</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>過去 25 年颱風路徑 24 小時預報誤差年平均改善率約 <strong>2.7%</strong></li>
+  <li><strong>2025 年</strong>：24、48 小時誤差較前一年降低 <strong>12%、8%</strong>，且優於美日 <strong>13–16%</strong></li>
+</ul>
+<hr class="border-slate-700 my-8">
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">Q2: AI 報颱風真的很厲害嗎？</h3>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">2.1 颱風路徑預報系統架構</h4>
+<p class="my-3 leading-relaxed">氣象署整合多來源模式達成早期預警，分為三大類：</p>
+<pre><code class="language-">
+| 類別 | 模型/系統 |
+|------|----------|
+| **全球 AI 模型** | 18 個（含 6 種開源模型：Google, NVIDIA, Microsoft 等） |
+| **初始輸入資料** | 3 個（美國 GFS、歐洲 ECMWF、氣象署全球模式） |
+
+#### 2.2 颱風路徑案例分析
+
+##### 凱米颱風 (2024)
+- AI 模式在**更早的時間**穩定預報出和實際相似的路徑
+- 顯示颱風可能**停滯或偏折**
+- 大幅精進颱風路徑預報準確度
+- **限制**：中心遇地形打轉現象仍須**高解析區域模式**方能掌握
+
+##### 山陀兒颱風 (2024秋)
+- AI 預報較早掌握近台灣東部路徑
+- **未能預測**通過巴士海峽轉南部登陸路徑
+- 秋颱特殊路徑 + 北方系統交互影響 → 基隆北海岸雨量預報難度極高
+- **教訓**：秋季颱風預測路徑仍難以掌握
+
+#### 2.3 AI 颱風預報優缺點
+
+| | 優點 ✅ | 缺點 ⚠️ |
+|---|---------|---------|
+| 大尺度 | 大範圍天氣系統預測能力佳 | 模型可解釋性不足 |
+| 速度 | 比傳統模型更快 | 訓練消耗大量計算資源 |
+| 多變數 | 可同時處理多種氣象變數 | 全球模型 (0.25°) 解析能力不足 |
+| 颱風 | 生成與路徑預測具優勢 | 強度仍不足，風雨預報能力待釐清 |
+
+#### 2.4 颱風結構分析及預報 AI 技術
+
+| 技術 | AI 方法 | 功能 | 開發單位 |
+|------|--------|------|---------|
+| **DLTC** | GAN-CNN | 利用衛星雲圖估計颱風強度 | 委託台大陳柏孚團隊 |
+| **TCSA / DSAT-2D** | GAN-CNN | 輸出軸對稱颱風風速剖面 → 二維風場及四象限結構 → 非對稱地面風場 | 同上 |
+| **Deep-Rainband** | GAN | 以同步衛星觀測產製 PMW 雲圖，擺脫繞極衛星依賴，1 小時頻率提供強度/結構估計 | 同上 |
+| **TCRI / TCRE** | GAN-CNN + convLSTM | 颱風系集預報，提供未來 24 小時快速增強 (RI) 發生機率 | 同上 |
+
+---
+
+### Q3: 前處理 &amp; 後處理？那是什麼東西？
+
+#### 3.1 預報指引作業化流程
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph LR
+    subgraph NWP物理模式
+    A1[ECMWF] 
+    A2[NCEP-GFS]
+    A3[WRFD / TWRF]
+    end
+    
+    subgraph 系集預報
+    B1[EC 系集]
+    B2[GFS 系集]
+    B3[ECES / ENES]
+    B4[OBEST 先進系集]
+    end
+    
+    subgraph AI模式預報
+    C1[EC-AIFS]
+    C2[Google GraphCast]
+    C3[NVIDIA FourCastNet]
+    C4[PANGU / FUXI / FENGWU]
+    end
+    
+    subgraph 統計整合
+    D1[BMA10 / TOP10 / BMAexp]
+    end
+    
+    A1 --> D1
+    B1 --> D1
+    C1 --> D1
+    D1 --> E[預報作業指引]
+</div>
+graph LR
+    A[觀測/再分析資料] --&gt; B[資料抓取/下載]
+    B --&gt; C[前處理&lt;br/&gt;資料整集]
+    C --&gt; D[模式預報&lt;br/&gt;NWP / AI 模型]
+    D --&gt; E[後處理&lt;br/&gt;降尺度/校正]
+    E --&gt; F[校驗]
+    F --&gt; G[預報決策與支援]
+    
+    style C fill:#e8a838,color:#fff
+    style E fill:#4a90d9,color:#fff
+</code></pre>
+<p class="my-3 leading-relaxed">加入 AI 後的變化：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>前處理</strong>：+ AI 訓練模型（資料整集、品質篩選、正規化）</li>
+  <li><strong>後處理</strong>：+ AI 模型（降尺度、偏差校正）</li>
+  <li>使用 <strong>DockerFlow</strong> 與<strong>格點倉儲 (GT)</strong> 管理作業流程</li>
+</ul>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">3.2 前處理重點</h4>
+<p class="my-3 leading-relaxed">前處理是將原始資料「洗乾淨」給 AI，關鍵步驟：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>步驟</th><th>說明</th></tr>
+<tr><td><strong>異質資料處理</strong></td><td>理解各資料特性、異常值（NaN、-999.9、負值）、不同單位須正規化</td></tr>
+<tr><td><strong>資料庫建立</strong></td><td>例：無現成颱風剖面資料，需用 best-track + 物理方程式 + ERA5 反推軸對稱風速剖面</td></tr>
+<tr><td><strong>訓練目標篩選</strong></td><td>根據目標挑選合適資料，如剔除過多弱天氣系統資料</td></tr>
+<tr><td><strong>計算精度</strong></td><td>選擇 float32 或 float64</td></tr>
+<tr><td><strong>正規化</strong></td><td>不同資料量值差異過大需正規化處理</td></tr>
+</table></div>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">3.3 後處理——NWP 雨量預報 AI 降尺度</h4>
+<p class="my-3 leading-relaxed">##### EC 降水預報降尺度 (ECDS)</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>項目</th><th>規格</th></tr>
+<tr><td><strong>方法</strong></td><td>Nested-Unet + 遷移式學習</td></tr>
+<tr><td><strong>輸入</strong></td><td>ECMWF 0.1° QPF + 高解析 0.0125° 地形</td></tr>
+<tr><td><strong>輸出</strong></td><td>0.0125° QPF</td></tr>
+<tr><td><strong>預報範圍</strong></td><td>240 hr / 3、6、12、24 hr 累積雨量</td></tr>
+<tr><td><strong>訓練硬體</strong></td><td>RTX 6000（6–12 小時）</td></tr>
+<tr><td><strong>推論時間</strong></td><td>CPU ~5 分鐘</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed"><strong>特色</strong>：地形上降雨被增強，可提高強降雨可預報度，透過非線性方法提升解析度。</p>
+<p class="my-3 leading-relaxed">##### 系集預報降尺度 (WEPS-AI)</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>項目</th><th>規格</th></tr>
+<tr><td><strong>方法</strong></td><td>GAN + Swin-Transformer</td></tr>
+<tr><td><strong>輸入</strong></td><td>WEPS mean 3 km QPF</td></tr>
+<tr><td><strong>輸出</strong></td><td>1 km QPF</td></tr>
+<tr><td><strong>預報範圍</strong></td><td>120 hr / 24 hr 累積雨量</td></tr>
+<tr><td><strong>訓練硬體</strong></td><td>GeForce RTX 3090（2–4 小時）</td></tr>
+<tr><td><strong>推論時間</strong></td><td>~2 分鐘</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed"><strong>特色</strong>：學習 NWP 偏差後具有<strong>空間訂正能力</strong>，不同於傳統方法僅能改變雨量值但無法改變雨區。</p>
+<p class="my-3 leading-relaxed">##### 案例成效</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>米塔颱風 (2019)</strong>：AI 修正降水極值大小及範圍</li>
+  <li><strong>利奇馬颱風 (2019)</strong>：加入地形資訊提高雨量空間解析度</li>
+</ul>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">3.4 後處理——MLWP 雨量預報降尺度</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>將全球 MLWP 模式從 <strong>25 km → 5 km</strong></li>
+  <li>修正系統性誤差、地形降雨效應</li>
+  <li>多模式可直接比較</li>
+  <li>預計部署至 <strong>iQPF 網頁</strong></li>
+</ul>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">3.5 後處理——AI 模式溫度降尺度</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>DCA (Downscaling Correction Approach)</strong> 校正 AI 模式原始輸出</li>
+  <li>產出 <strong>14 天逐時溫度預報</strong>時間序列</li>
+  <li>整合至<strong>圖形預報編輯系統 (GFE)</strong> 作為溫度格點預報的基本材料（smart init 技術）</li>
+</ul>
+<hr class="border-slate-700 my-8">
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">Q4: AI 可以報午後雷陣雨嗎？</h3>
+<p class="my-3 leading-relaxed"><strong>結論</strong>：自研模型在校驗指標上有所精進，但對流系統具高度不確定性，AI 預報目前僅具<strong>初步參考潛力</strong>，實務應用仍需長期且嚴謹地評估其穩定性。</p>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">極短期降雨預報 (QPN) 三套系統</h4>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>系統</th><th>方法</th><th>輸入</th><th>輸出</th><th>推論時間</th></tr>
+<tr><td><strong>MIMQPN</strong></td><td>Memory-In-Memory</td><td>QPESUMS 最近 6 張雷達 CV + 降雨率</td><td>未來 20–70 min 之 60 分鐘雨量（逐 10 min 更新）</td><td>CPU 3–5 min</td></tr>
+<tr><td><strong>DeepQPF</strong></td><td>convGRU + discriminator + PONI + 異質資料</td><td>QPESUMS 6 張 + 地形/季節/舉升指數/位溫/風場</td><td>未來 3 小時內逐時時雨量</td><td>CPU 2–3 min</td></tr>
+<tr><td><strong>大台北強降雨預報</strong></td><td>ConvNeXt / U-net++ / simVP / ViT</td><td>RWRF 模式資料</td><td>未來 2–6 小時時雨量 &gt; 10mm 格點</td><td>—</td></tr>
+</table></div>
+<blockquote class="my-4"><strong>DeepQPF</strong> 僅預報至 3 小時（3–6 小時可預報度較低）；大台北強降雨模型可報至 6 小時，但僅限初始時間 00–05Z。</blockquote>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">閃電躍升與決策樹</h4>
+<p class="my-3 leading-relaxed">利用 <strong>iREADs</strong> 系統，結合分區午後對流達大雨的閃電躍升資料建立<strong>決策樹</strong>：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>判斷條件</th><th>門檻值</th></tr>
+<tr><td>連續閃電躍升數</td><td>≥ 3</td></tr>
+<tr><td>20 分鐘雨量門檻</td><td>18.35 mm</td></tr>
+<tr><td>10 分鐘雨量門檻</td><td>6.75 mm</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed">分類結果：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>分類 1：機率 0.307（低風險）</li>
+  <li>分類 2：機率 0.559（中風險）</li>
+  <li>分類 3：機率 0.806（高風險）</li>
+</ul>
+<hr class="border-slate-700 my-8">
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">Q5: AI 應用與傳統預報方法的長短處？</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th></th><th>AI 應用</th><th>傳統方法</th></tr>
+<tr><td><strong>運算時效</strong></td><td>極快：數秒至數分鐘</td><td>計算時間明顯較長</td></tr>
+<tr><td><strong>物理邏輯</strong></td><td>黑盒子，可解釋性低</td><td>空間連貫性與物理一致性高</td></tr>
+<tr><td><strong>主要長處</strong></td><td>中長期 (3–14 天) 大尺度預報穩定；修正偏差/降尺度成效佳</td><td>物理結構完整；中小尺度/地形效應掌握較佳</td></tr>
+<tr><td><strong>主要短處</strong></td><td>缺乏明確物理因果</td><td>運算成本高、延遲時間長</td></tr>
+</table></div>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">AI 應用策略（依預報時間尺度）</h4>
+<pre><code class="language-">
+---
+
+### Q6: 預報員要被 AI 取代了嗎？
+
+**答案：不會！**
+
+| 角色 | 職責 |
+|------|------|
+| **AI** | 負責運算——大規模數據處理、模式優化與高效率結果推論，提供準確及快速的參考指引 |
+| **預報員** | 負責核心價值——最後的物理診斷、面對民眾的風險溝通、災防決策制定，承擔最終決策責任 |
+
+---
+
+## 3. AI 技術導入時間軸（2022–2026）
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph LR
+    A[極短期即時監測<br/>< 1小時] --> B[AI 校正與降尺度<br/>1小時 ~ 6小時]
+    B --> C[MLWP 短中期天氣預報<br/>1天 ~ 2週]
+</div>
+gantt
+    title AI 技術作業化時程
+    dateFormat YYYY-MM
+    axisFormat %Y
+
+    section 颱風
+    颱風強度估計 (DLTC)           :done, 2022-07, 2023-01
+    颱風不對稱結構分析 (TCSA)     :done, 2023-01, 2023-06
+    颱風路徑 盤古NCEP              :done, 2023-06, 2024-01
+    颱風路徑 盤古EC                :done, 2024-01, 2024-06
+    颱風路徑 科發組18條            :done, 2024-06, 2025-01
+    颱風路徑 AIFS/GenCast/GraphCast/FGN :done, 2025-01, 2026-01
+    颱風強度預報/結構預報/對流分析  :active, 2025-06, 2026-06
+
+    section 降水QPF
+    MIMQPN                         :done, 2023-01, 2024-01
+    DeepQPF v1/v2/v3               :done, 2023-06, 2025-06
+    EC QPF 降尺度 (ECDS)           :done, 2024-01, 2025-01
+    WEPS-GAN 校正                  :done, 2024-06, 2025-06
+    Diffusion 10min                :active, 2025-06, 2026-06
+
+    section 溫度
+    盤古NCEP DCA                   :done, 2024-01, 2024-06
+    盤古EC DCA / AIFS DCA          :done, 2024-06, 2025-06
+</code></pre>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">4. 關鍵術語表 (Glossary)</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>術語</th><th>英文</th><th>說明</th></tr>
+<tr><td>MLWP</td><td>Machine Learning Weather Prediction</td><td>機器學習天氣預報（資料驅動模型）</td></tr>
+<tr><td>NWP</td><td>Numerical Weather Prediction</td><td>數值天氣預報（物理方程驅動）</td></tr>
+<tr><td>OBEST</td><td>Observation-Based Ensemble Subsetting Technique</td><td>基於觀測的系集子集選擇技術 (Dong &amp; Zhang, 2016)</td></tr>
+<tr><td>BMA</td><td>Bayesian Model Averaging</td><td>貝葉斯模式平均，以歷史表現加權 (Chen et al., 2017)</td></tr>
+<tr><td>GAN</td><td>Generative Adversarial Network</td><td>生成式對抗網路</td></tr>
+<tr><td>CNN</td><td>Convolutional Neural Network</td><td>卷積神經網路</td></tr>
+<tr><td>convLSTM</td><td>Convolutional LSTM</td><td>卷積長短期記憶網路（時空序列）</td></tr>
+<tr><td>convGRU</td><td>Convolutional GRU</td><td>卷積門控循環單元</td></tr>
+<tr><td>Swin-Transformer</td><td>Shifted Window Transformer</td><td>滑動視窗 Transformer（用於降尺度）</td></tr>
+<tr><td>ViT</td><td>Vision Transformer</td><td>視覺 Transformer</td></tr>
+<tr><td>U-net++</td><td>Nested U-Net</td><td>巢狀 U-Net 架構</td></tr>
+<tr><td>ConvNeXt</td><td>Convolutional Next</td><td>現代化 CNN 架構</td></tr>
+<tr><td>simVP</td><td>Simple Video Prediction</td><td>簡單影片預測架構</td></tr>
+<tr><td>PONI</td><td>—</td><td>DeepQPF 中的降水校正模組</td></tr>
+<tr><td>YOLO</td><td>You Only Look Once</td><td>物件偵測演算法</td></tr>
+<tr><td>DCA</td><td>Downscaling Correction Approach</td><td>降尺度校正方法</td></tr>
+<tr><td>GFE</td><td>Graphic Forecast Editor</td><td>圖形預報編輯系統</td></tr>
+<tr><td>GT</td><td>Grid Toolbox</td><td>格點倉儲（搭配 DockerFlow）</td></tr>
+<tr><td>iQPF</td><td>—</td><td>定量降水預報網頁平台</td></tr>
+<tr><td>iREADs</td><td>—</td><td>即時分析診斷系統（閃電躍升預警）</td></tr>
+<tr><td>QPESUMS</td><td>Quantitative Precipitation Estimation and Segregation Using Multiple Sensors</td><td>多元感測器定量降水估計系統</td></tr>
+<tr><td>QPF</td><td>Quantitative Precipitation Forecast</td><td>定量降水預報</td></tr>
+<tr><td>QPE</td><td>Quantitative Precipitation Estimation</td><td>定量降水估計</td></tr>
+<tr><td>QPN</td><td>Quantitative Precipitation Nowcasting</td><td>極短期定量降水預報</td></tr>
+<tr><td>DLTC</td><td>Deep Learning Typhoon Center</td><td>深度學習颱風強度估計</td></tr>
+<tr><td>TCSA</td><td>Typhoon Complete Structure Analysis</td><td>颱風完整結構分析（二維風場）</td></tr>
+<tr><td>DSAT-2D</td><td>—</td><td>颱風非對稱地面風場分析</td></tr>
+<tr><td>TCRI / TCRE</td><td>Typhoon Rapid Intensification / Ensemble</td><td>颱風快速增強機率預報</td></tr>
+<tr><td>PMW</td><td>Passive Microwave</td><td>被動微波（衛星觀測）</td></tr>
+<tr><td>RI</td><td>Rapid Intensification</td><td>颱風快速增強（24h 風速增加 ≥ 30 kt）</td></tr>
+<tr><td>WEPS</td><td>Weather Ensemble Prediction System</td><td>天氣系集預報系統</td></tr>
+<tr><td>ECDS</td><td>EC Downscaling System</td><td>EC 降水預報降尺度系統（預報中心自研）</td></tr>
+<tr><td>RMW</td><td>Radius of Maximum Wind</td><td>最大風速半徑</td></tr>
+<tr><td>R34</td><td>Radius of 34-kt Wind</td><td>34 節風速半徑</td></tr>
+<tr><td>Vmax</td><td>Maximum Sustained Wind</td><td>最大持續風速</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">5. 參考文獻</h2>
+</div>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>Dong, L. and Zhang, F. (2016). OBEST: An observation-based ensemble subsetting technique for tropical cyclone track prediction.</li>
+  <li>Chen, B.-F. et al. (2017). Bayesian model averaging for tropical cyclone track forecasting.</li>
+  <li>ECMWF AIFS 相關文獻</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">6. 學習重點總結</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">三大核心要點</h3>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>AI 已是預報作業不可或缺的指引</strong>——颱風路徑預報 24h 誤差年改善率 2.7%，2025 年更較前年降低 12%，整合 18 個全球 AI 模型 + 3 種初始場。</li>
+</ul>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>前處理與後處理是 AI 落地的關鍵</strong>——前處理將原始資料「洗乾淨」（異質資料處理、正規化、品質篩選）；後處理將預報「精緻化」（降尺度 25km→5km、偏差校正、GAN/Transformer 空間訂正）。</li>
+</ul>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>AI 不取代預報員，而是分工合作</strong>——AI 負責運算與參考指引，預報員負責物理診斷、風險溝通與最終決策責任。極短期對流預報（午後雷陣雨）AI 仍僅具初步參考潛力。</li>
+</ul>
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>

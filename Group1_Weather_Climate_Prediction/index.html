@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天氣與氣候預報模型開發 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">🌦️ 天氣與氣候預報模型開發</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組一：天氣與氣候預報模型開發</h1>
+<blockquote class="my-4"><strong>講者</strong>：科技發展組 劉正欽 副研究員<br><strong>時段</strong>：2026/04/20（上午）<br><strong>來源</strong>：<code>20260420_新進同仁AI教育訓練_分組一_天氣與氣候預報模型開發.pptx</code></blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">1. 氣象署的核心使命</h2>
+</div>
+<p class="my-3 leading-relaxed">氣象署的願景可歸納為五大方向：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>面向</th><th>目標</th></tr>
+<tr><td>預報精度</td><td>讓預報「<strong>更準、更早、更細</strong>」</td></tr>
+<tr><td>資訊傳達</td><td>讓資訊「<strong>更好懂、更好用</strong>」</td></tr>
+<tr><td>預警效能</td><td>讓警示「<strong>更有感、更可信</strong>」</td></tr>
+<tr><td>教育推廣</td><td>推動氣象教育與素養</td></tr>
+<tr><td>氣候調適</td><td>面對氣候變遷的角色升級</td></tr>
+</table></div>
+<blockquote class="my-4">核心關鍵字：<strong>預報</strong>（天氣或氣候）——這是氣象署所有 AI 應用的出發點。</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">2. 氣象業務場景：天氣預報的演進</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">2.1 從經驗預報到數值預報</h3>
+<p class="my-3 leading-relaxed">天氣預報起源於<strong>觀測現況</strong>，再透過歸納與演繹進行推理：</p>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">傳統經驗預報（諺語觀天）</h4>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>諺語</th><th>科學解讀</th></tr>
+<tr><td>「龜山戴黑帽，若瞇雨就落」</td><td>龜山島上有烏雲籠罩時，蘭陽平原即將降雨</td></tr>
+<tr><td>「空中魚鱗天，不雨也風顛」</td><td>卷積雲出現後天氣轉壞，約半天後風速增強，雲層增厚產生降雨</td></tr>
+<tr><td>「天有城堡雲，地上雷雨臨」</td><td>堡狀層積雲/高積雲底平頂凸，夏天早晨出現時，白天對流發展易引發雷雨</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">2.2 大氣觀測系統（圖片解析）</h3>
+<p class="my-3 leading-relaxed">天氣預報的起點是觀測。簡報以三張圖片完整呈現現代氣象觀測的三個層次：</p>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">圖一：地面氣象觀測站（觀測坪）</h4>
+<blockquote class="my-4">來源：<code>raw_data/pic1.jpg</code></blockquote>
+<p class="my-3 leading-relaxed">照片為氣象署典型的<strong>地面觀測坪</strong>，可見的儀器包括：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>百葉箱</strong>（白色木造箱體）：內置溫度計與濕度計，遮蔽日曬確保通風</li>
+  <li><strong>雨量計</strong>（金屬圓筒形）：量測降水量</li>
+  <li><strong>蒸發皿</strong>（大型金屬盤）：量測蒸發量</li>
+  <li><strong>風速風向計</strong>（高桿頂端）：量測地面風場</li>
+  <li><strong>日照計</strong>、<strong>地溫計</strong>等其他輔助儀器</li>
+</ul>
+<p class="my-3 leading-relaxed">這是氣象預報最基礎的資料來源——<strong>地面觀測 (Surface Station)</strong>。</p>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">圖二：WMO 全球觀測系統 (Global Observing System, GOS)</h4>
+<blockquote class="my-4">來源：<code>raw_data/pic2.jpg</code></blockquote>
+<p class="my-3 leading-relaxed">此圖展示 WMO 定義的全球觀測網絡架構，所有觀測資料最終匯入<strong>國家氣象服務中心 (NMS)</strong>：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>觀測平台</th><th>說明</th></tr>
+<tr><td><strong>Polar Orbiting Satellite</strong></td><td>繞極衛星，低軌道掃描全球（約 850 km 高度）</td></tr>
+<tr><td><strong>Geostationary Satellite</strong></td><td>同步衛星，固定於赤道上空（約 35,800 km），連續觀測</td></tr>
+<tr><td><strong>Satellite Soundings</strong></td><td>衛星垂直剖面探測（溫度、濕度垂直分佈）</td></tr>
+<tr><td><strong>Satellite Ground Station</strong></td><td>衛星地面接收站</td></tr>
+<tr><td><strong>Satellite Images</strong></td><td>衛星雲圖影像</td></tr>
+<tr><td><strong>Aircraft</strong></td><td>航空氣象觀測（飛機沿線觀測）</td></tr>
+<tr><td><strong>Ocean Data Buoy</strong></td><td>海洋資料浮標（海面氣壓、海溫、浪高）</td></tr>
+<tr><td><strong>Weather Ship</strong></td><td>氣象觀測船</td></tr>
+<tr><td><strong>Surface Station</strong></td><td>地面氣象站（即圖一的觀測坪）</td></tr>
+<tr><td><strong>Upper-Air Station</strong></td><td>高空觀測站（探空氣球/無線電探空儀）</td></tr>
+<tr><td><strong>Weather Radar</strong></td><td>氣象雷達（降水分佈、風場）</td></tr>
+<tr><td><strong>Automatic Station</strong></td><td>自動氣象站</td></tr>
+</table></div>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">圖三：全球氣象衛星星座分佈</h4>
+<blockquote class="my-4">來源：<code>raw_data/pic3.png</code></blockquote>
+<p class="my-3 leading-relaxed">此圖展示環繞地球的主要氣象衛星星座，分為兩類軌道：</p>
+<p class="my-3 leading-relaxed"><strong>同步軌道衛星（赤道上空 ~35,800 km）</strong>：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>衛星</th><th>經度位置</th><th>營運機構</th></tr>
+<tr><td>GOES-R</td><td>75°W / 135°W</td><td>美國 (USA)</td></tr>
+<tr><td>MSG / METEOSAT</td><td>0° / 63°E</td><td>EUMETSAT（歐洲）</td></tr>
+<tr><td>GMS-5 / MTSAT-1R</td><td>140°E</td><td>日本</td></tr>
+<tr><td>FY-2/4</td><td>105°E</td><td>中國</td></tr>
+<tr><td>INSAT</td><td>83°E</td><td>印度</td></tr>
+<tr><td>GOMS</td><td>76°E</td><td>俄羅斯</td></tr>
+<tr><td>COMSAT-1</td><td>120°E</td><td>韓國</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed"><strong>繞極軌道衛星（~850 km）</strong>：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>FY-1/3（中國）、METEOR 3M（俄羅斯）、Metop（EUMETSAT）、NPOESS（美國）</li>
+  <li>Terra、NPP、Aqua、TRMM、Jason-1、QuickSat（科研衛星）</li>
+  <li>ENVISAT/ERS-2、SPOT-5（歐洲地球觀測）</li>
+  <li>GPM/GCOM（全球降水觀測）</li>
+</ul>
+<blockquote class="my-4"><strong>台灣的角色</strong>：氣象署主要接收 <strong>Himawari（MTSAT 後繼，日本）</strong> 及 <strong>GOES（美國）</strong> 的資料，並透過 GTS（全球電信系統）取得各國衛星觀測資料。</blockquote>
+<hr class="border-slate-700 my-8">
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">現代數值預報流程</h4>
+<pre><code class="language-">大氣觀測  →  歸納現象  →  演繹為方程式  →  數值模式求解  →  預報產品
+(衛星、雷達)    (物理定律)    (淺水方程等)     (超級電腦)      (天氣變數)
+</code></pre>
+<pre><code class="language-">
+### 2.2 數值天氣預報 (NWP) 的定位
+
+數值天氣預報的三個核心特質：
+
+1. **一門科學**：整合數學、流體力學、數值方法、紊流、雲物理，需高度專業科學人才投入研發。
+2. **一門產業**：結合高速運算、網路及各式資訊技術，需資訊產業全力支援。
+3. **高成本、高技術門檻**：氣象科技及資訊科技的**協力合作**是成功關鍵。
+
+&gt; **關鍵洞察**：如何從大量資料中累積有價值的資訊，創造知識，發揮「預報」的價值——這就是**大數據與人工智慧**應用的核心議題。
+
+---
+
+## 3. 機器學習天氣預報 (MLWP)
+
+### 3.1 為什麼要探討 MLWP？
+
+在數值模式（NWP）已十分成功的基礎下，探索 MLWP 的科學理由：
+
+| 問題 | 回應 |
+|------|------|
+| 推論（預報）速度快？ | 若沒有準度（與 NWP 相比），快也無用 |
+| 有機會比 NWP 更準？ | 需實驗驗證。Dueben and Bauer (2018) 提出核心問題：*基於深度學習的預報模型能否與基於物理方程的天氣氣候模型競爭甚至超越？* |
+
+### 3.2 科學基礎：通用近似定理 (Universal Approximation Theorem)
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph LR
+    A[Observations<br/>衛星/雷達/探空] --> B[Physical Laws<br/>流體力學方程]
+    B --> C[Numerical Methods<br/>三維網格差分]
+    C --> D[Super Computing<br/>高速運算]
+    D --> E[Forecast Variables<br/>預報變數輸出]
+</div>
+一層的前饋式神經網路即可近似任意連續函數
+</code></pre>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>實務上，<strong>網路的深度</strong>與<strong>隱藏層神經元數量</strong>是準確度的關鍵 → 即<strong>深度學習</strong></li>
+  <li>成功三要素：<strong>資料</strong> + <strong>軟硬體</strong> + <strong>演算法</strong></li>
+</ul>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">3.3 MLWP 模型發展歷程（2022–2025）</h3>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">第 1 代：單一/決定性預報模型</h4>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>年份</th><th>模型</th><th>開發機構</th></tr>
+<tr><td>2022</td><td><strong>Pangu-Weather</strong></td><td>Huawei</td></tr>
+<tr><td>2023</td><td><strong>GraphCast</strong></td><td>Google DeepMind</td></tr>
+<tr><td>2023</td><td><strong>FengWu</strong></td><td>Shanghai AI Lab.</td></tr>
+<tr><td>2023</td><td><strong>FuXi</strong></td><td>Fudan University</td></tr>
+<tr><td>2023</td><td><strong>FourCastNet v2</strong></td><td>NVIDIA</td></tr>
+<tr><td>2024</td><td><strong>AIFS-single</strong></td><td>ECMWF</td></tr>
+<tr><td>2024</td><td><strong>Aurora</strong></td><td>Microsoft Research</td></tr>
+</table></div>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">第 2 代：系集/機率性預報模型（具展期預報潛力）</h4>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>年份</th><th>模型</th><th>開發機構</th></tr>
+<tr><td>2024</td><td><strong>FGN</strong></td><td>Google DeepMind</td></tr>
+<tr><td>2024</td><td><strong>GenCast</strong></td><td>Google DeepMind</td></tr>
+<tr><td>2025</td><td><strong>AIFS ENS</strong></td><td>ECMWF</td></tr>
+<tr><td>2025</td><td><strong>FourCastNet v3</strong></td><td>NVIDIA</td></tr>
+</table></div>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">第 3 代（探索中）：End-to-End / Direct Observation Prediction</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>Aardvark、GraphDOP、Huracan、FuXi weather</li>
+</ul>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">MLWP 技術趨勢筆記</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>當前 MLWP 作業預報仍<strong>完全仰賴傳統 NWP 模式及資料同化技術</strong>提供訓練資料及預報初始場</li>
+  <li>系集 MLWP 模型由「<strong>擴散模型 (Diffusion Model)</strong>」往「<strong>運用系集資料讓 CRPS 最小化</strong>」方式前進</li>
+  <li>多數模型採用 <strong>Transformer 架構</strong>（Vision Transformer, Shifted Window Transformer v1/v2）——Transformer 本質上是一種<strong>圖神經網路 (GNN)</strong></li>
+  <li>開始出現 MLWP 模型<strong>訓練框架</strong>以加速開發與應用</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">4. 氣象署 MLWP 發展策略</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.1 優勢與待克服挑戰</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>類別</th><th>優勢 ✅</th><th>挑戰 ⚠️</th></tr>
+<tr><td>速度</td><td>取得預報資料速度極快，可做大量系集</td><td>—</td></tr>
+<tr><td>準度</td><td>兩週預報在部分變數已優於 NWP</td><td>驗證度尚不足，展期預報表現待釐清</td></tr>
+<tr><td>颱風</td><td>颱風路徑預報優於 NWP，屬<strong>即戰力</strong></td><td>—</td></tr>
+<tr><td>開源</td><td>原始碼開源可作為訓練參考架構</td><td>—</td></tr>
+<tr><td>解析度（空間）</td><td>—</td><td>不足以滿足鄉鎮尺度業務需求</td></tr>
+<tr><td>解析度（時間）</td><td>—</td><td>無法滿足高時間解析需求</td></tr>
+<tr><td>變數完整性</td><td>—</td><td>部分 MLWP 未提供降水資料</td></tr>
+<tr><td>在地化</td><td>—</td><td>台灣資料不足，無法反映地形效應</td></tr>
+<tr><td>邊界條件</td><td>新的邊界資訊選擇</td><td>—</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.2 核心精神</h3>
+<blockquote class="my-4"><strong>在業務精進的角度下，引領開源模型在地化應用與驗證，發展模型以補足缺口。</strong></blockquote>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.3 雙軌策略</h3>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">應用模型（短中期目標）</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>落地 <strong>6 種開源 MLWP 模型</strong>，驗證天氣尺度預報（~10 天）表現</li>
+  <li>平行作業 MLWP 模型，提供<strong>颱風路徑產品</strong>給預報中心參考</li>
+  <li>評估 MLWP 於<strong>展期尺度預報（~45 天）</strong>表現</li>
+  <li>混合（Hybrid）NWP 與 AI 對天氣尺度預報之評估</li>
+</ul>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">發展模型（中長期目標）</h4>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>合作建置及引進 <strong>MLWP 框架</strong>加速模型發展</li>
+  <li>學研合作：<strong>DLAMP</strong></li>
+  <li>國際合作：<strong>NCAR</strong></li>
+  <li>自主研發：<strong>Anemoi</strong></li>
+  <li>先著重發展<strong>區域 MLWP（決定性預報）→ 系集 MLWP</strong></li>
+  <li>持續關注展期至氣候尺度 MLWP 發展，評估自行發展可行性</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">5. 關鍵術語表 (Glossary)</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>術語</th><th>英文</th><th>說明</th></tr>
+<tr><td>NWP</td><td>Numerical Weather Prediction</td><td>數值天氣預報，以物理方程為基礎的預報方法</td></tr>
+<tr><td>MLWP</td><td>Machine Learning Weather Prediction</td><td>機器學習天氣預報，以資料驅動的 AI 預報方法</td></tr>
+<tr><td>GOS</td><td>Global Observing System</td><td>WMO 全球觀測系統，整合衛星、地面、海洋等多平台觀測</td></tr>
+<tr><td>GTS</td><td>Global Telecommunication System</td><td>全球電信系統，各國氣象資料交換網路</td></tr>
+<tr><td>NMS</td><td>National Meteorological Service</td><td>國家氣象服務中心（如台灣氣象署）</td></tr>
+<tr><td>資料同化</td><td>Data Assimilation</td><td>將觀測資料融入數值模式以產生最佳初始場</td></tr>
+<tr><td>通用近似定理</td><td>Universal Approximation Theorem</td><td>一個隱藏層的前饋神經網路可近似任意連續函數</td></tr>
+<tr><td>Transformer</td><td>Transformer Architecture</td><td>基於注意力機制的深度學習架構，MLWP 主流</td></tr>
+<tr><td>Vision Transformer</td><td>ViT</td><td>將影像切塊 (patch) 後以 Transformer 處理的視覺模型</td></tr>
+<tr><td>Swin Transformer</td><td>Shifted Window Transformer</td><td>使用滑動視窗注意力的 Transformer 變體 (v1/v2)</td></tr>
+<tr><td>GNN</td><td>Graph Neural Network</td><td>圖神經網路，處理非歐幾里得結構資料</td></tr>
+<tr><td>擴散模型</td><td>Diffusion Model</td><td>從噪聲逐步去噪生成資料的生成式模型</td></tr>
+<tr><td>CRPS</td><td>Continuous Ranked Probability Score</td><td>評估機率預報品質的指標，越小越好</td></tr>
+<tr><td>系集預報</td><td>Ensemble Forecast</td><td>以多組初始條件或模型進行群體預報，提供不確定性資訊</td></tr>
+<tr><td>展期預報</td><td>Extended-range Forecast</td><td>超過 10 天至約 45 天的中長期預報</td></tr>
+<tr><td>ECMWF</td><td>European Centre for Medium-Range Weather Forecasts</td><td>歐洲中期天氣預報中心，全球頂尖氣象機構</td></tr>
+<tr><td>Anemoi</td><td>Anemoi Framework</td><td>ECMWF 開源的 MLWP 訓練框架</td></tr>
+<tr><td>DLAMP</td><td>—</td><td>學研合作的 MLWP 開發計畫</td></tr>
+<tr><td>NCAR</td><td>National Center for Atmospheric Research</td><td>美國國家大氣研究中心</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">6. 參考文獻</h2>
+</div>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>Dueben, P. D. and Bauer, P. (2018). <em>Challenges and design choices for global weather and climate models based on machine learning.</em> Geoscientific Model Development.</li>
+  <li>WMO AI for Weather Task Team — MLWP 模型世代定義</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-6" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">7. 學習重點總結</h2>
+</div>
+<pre><code class="language-">
+### 三個核心要點
+
+1. **NWP 仍是主流且不可取代**——MLWP 目前完全依賴 NWP 提供訓練資料與初始場
+2. **MLWP 的即戰力在颱風路徑預報**——已優於數值模式，氣象署可直接應用
+3. **氣象署採雙軌策略**——「應用開源模型」+「自主發展模型」，核心是在地化與業務精進
+
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>

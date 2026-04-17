@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWA AI Knowledge Hub — 氣象署 AI 應用學習地圖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(43,145,255,0.15); }
+  .glow { animation: pulse-glow 3s ease-in-out infinite; }
+  @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px rgba(43,145,255,0.1); } 50% { box-shadow: 0 0 40px rgba(43,145,255,0.25); } }
+  .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2b91ff, #0a5ae1, #0e2a5e); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  .search-highlight { background: rgba(43,145,255,0.3); border-radius: 2px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Hero Section -->
+<header class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-cwa-950 via-slate-950 to-slate-900"></div>
+  <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, #2b91ff 0%, transparent 50%), radial-gradient(circle at 80% 50%, #0a5ae1 0%, transparent 50%);"></div>
+  <div class="relative max-w-6xl mx-auto px-4 py-16 md:py-24 text-center">
+    <div class="text-6xl mb-4">🌏</div>
+    <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+      CWA AI Knowledge Hub
+    </h1>
+    <p class="text-xl text-slate-400 mb-2">中央氣象署 AI 技術應用 — 新進人員教育訓練學習地圖</p>
+    <p class="text-sm text-slate-500">115 年 4 月 20–21 日 ｜ 8 個任務型分組 ｜ 互動式知識庫</p>
+
+    <!-- Search -->
+    <div class="mt-8 max-w-xl mx-auto relative">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="🔍 搜尋關鍵字（如：Transformer、降水、地震、DGMR…）"
+        class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cwa-500 focus:ring-2 focus:ring-cwa-500/30 transition"
+      >
+      <div id="search-results" class="absolute top-full left-0 right-0 mt-2 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-80 overflow-y-auto hidden z-50"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Stats Bar -->
+<section class="bg-slate-900/50 border-y border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-8 text-center">
+    <div><span class="text-2xl font-bold text-cwa-400">7</span><br><span class="text-xs text-slate-500">技術分組</span></div>
+    <div><span class="text-2xl font-bold text-cwa-400">130+</span><br><span class="text-xs text-slate-500">投影片</span></div>
+    <div><span class="text-2xl font-bold text-cwa-400">20+</span><br><span class="text-xs text-slate-500">AI 模型</span></div>
+    <div><span class="text-2xl font-bold text-cwa-400">7</span><br><span class="text-xs text-slate-500">互動頁面</span></div>
+  </div>
+</section>
+
+<!-- Timeline / Learning Map -->
+<section class="max-w-6xl mx-auto px-4 py-16">
+  <h2 class="text-2xl font-bold text-center text-white mb-2">📅 學習地圖</h2>
+  <p class="text-center text-slate-500 mb-12">依課程時間軸排列，點擊卡片進入詳細知識頁面</p>
+
+  <!-- Day 1: 4/20 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="bg-cwa-700 text-white text-sm font-bold px-4 py-1.5 rounded-full">DAY 1</div>
+      <span class="text-slate-400">4 月 20 日（日）</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Group 1 -->
+      <a href="Group1_Weather_Climate_Prediction/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🌦️</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">上午 ｜ 分組一</div>
+            <h3 class="text-lg font-bold text-white mb-2">天氣與氣候預報模型開發</h3>
+            <p class="text-sm text-slate-400 mb-3">NWP → MLWP 演進、三代 AI 天氣模型、CWA 雙軌策略</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Pangu-Weather</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">GenCast</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">NeuralGCM</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 2 -->
+      <a href="Group2_Marine_Climate_Tech/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🌊</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">上午 ｜ 分組二</div>
+            <h3 class="text-lg font-bold text-white mb-2">海象與氣候應用技術</h3>
+            <p class="text-sm text-slate-400 mb-3">BMA 氣候預報、CorrDiff 降尺度、YOLO 異常波浪偵測</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">BMA</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">CorrDiff</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">YOLO</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 3 -->
+      <a href="Group3_Warning_Forecasting/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">⚡</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">下午 ｜ 分組三</div>
+            <h3 class="text-lg font-bold text-white mb-2">天氣預報與預警應用技術</h3>
+            <p class="text-sm text-slate-400 mb-3">颱風路徑 AI、前後處理技術、定量降水即時預報 QPN</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">DLTC</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Nested-Unet</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Swin-Transformer</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 4 -->
+      <a href="Group4_Earthquake_Warning/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🔔</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">下午 ｜ 分組四</div>
+            <h3 class="text-lg font-bold text-white mb-2">地震預警應用技術</h3>
+            <p class="text-sm text-slate-400 mb-3">P/S 波辨識、AI 震度預估 ±1 級 92%、邊緣運算</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">EEW</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Phase Picking</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Edge Computing</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Day 2: 4/21 -->
+  <div>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="bg-cwa-600 text-white text-sm font-bold px-4 py-1.5 rounded-full">DAY 2</div>
+      <span class="text-slate-400">4 月 21 日（一）</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Group 5 -->
+      <a href="Group5_Weather_Monitoring/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">📡</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">上午 ｜ 分組五</div>
+            <h3 class="text-lg font-bold text-white mb-2">天氣監測與應用技術</h3>
+            <p class="text-sm text-slate-400 mb-3">雷達對流胞追蹤、衛星降水估計、DGMR 日射量預報</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">DGMR</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">MOE</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Diffusion</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 7 -->
+      <a href="Group7_IT_OpenSource/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🖥️</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">上午 ｜ 分組七</div>
+            <h3 class="text-lg font-bold text-white mb-2">資訊系統與開源環境</h3>
+            <p class="text-sm text-slate-400 mb-3">HPC 科普、第 6 代超算 12 PFlops、A64FX + A100 架構</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">HPC</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">A100 GPU</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">InfiniBand</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 8 -->
+      <a href="Group8_AI_Talent_Cultivation/index.html" class="card block bg-slate-900 border border-slate-800 rounded-2xl p-6 glow">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🎓</div>
+          <div class="flex-1">
+            <div class="text-xs text-cwa-400 font-medium mb-1">下午 ｜ 分組八</div>
+            <h3 class="text-lg font-bold text-white mb-2">AI 人才培育</h3>
+            <p class="text-sm text-slate-400 mb-3">五站式學習旅程、三種角色定位、課程滿意度 100%</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">MLOps</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">FCNv2</span>
+              <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded">DWP</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Group 9 placeholder -->
+      <div class="card block bg-slate-900/50 border border-slate-800/50 rounded-2xl p-6 opacity-50 cursor-not-allowed">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">📦</div>
+          <div class="flex-1">
+            <div class="text-xs text-slate-600 font-medium mb-1">下午 ｜ 分組九</div>
+            <h3 class="text-lg font-bold text-slate-600 mb-2">資料整集與重建</h3>
+            <p class="text-sm text-slate-600">即將推出 — 待取得原始簡報</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI Tech Map -->
+<section class="bg-slate-900/30 border-y border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold text-center text-white mb-2">🧠 AI 技術全景圖</h2>
+    <p class="text-center text-slate-500 mb-10">各分組涵蓋的 AI/ML 技術一覽</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <h4 class="text-sm font-bold text-cwa-400 mb-3">🔮 預報模型</h4>
+        <div class="space-y-1 text-sm text-slate-300">
+          <div>Pangu-Weather</div>
+          <div>GraphCast</div>
+          <div>GenCast</div>
+          <div>FourCastNet / FCNv2</div>
+          <div>NeuralGCM</div>
+          <div>Aurora</div>
+        </div>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <h4 class="text-sm font-bold text-cwa-400 mb-3">🏗️ 基礎架構</h4>
+        <div class="space-y-1 text-sm text-slate-300">
+          <div>CNN / 3D CNN</div>
+          <div>Transformer / Swin-Transformer</div>
+          <div>U-Net / Nested-Unet</div>
+          <div>GAN / DGMR</div>
+          <div>Diffusion Models</div>
+          <div>ConvLSTM / trajGRU</div>
+        </div>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <h4 class="text-sm font-bold text-cwa-400 mb-3">📊 統計與集成</h4>
+        <div class="space-y-1 text-sm text-slate-300">
+          <div>BMA (Bayesian Model Averaging)</div>
+          <div>MOE (Mixture of Experts)</div>
+          <div>Random Forest / SVM</div>
+          <div>LSTM / ANN</div>
+          <div>CorrDiff 降尺度</div>
+          <div>Continual Learning</div>
+        </div>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <h4 class="text-sm font-bold text-cwa-400 mb-3">⚙️ 應用技術</h4>
+        <div class="space-y-1 text-sm text-slate-300">
+          <div>YOLO 物件偵測</div>
+          <div>Phase Picking 波相辨識</div>
+          <div>Edge Computing 邊緣運算</div>
+          <div>Sobel 影像辨識</div>
+          <div>CRPS + Gaussian KDE</div>
+          <div>NowcastNet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-slate-900/50 border-t border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 py-8 text-center">
+    <p class="text-slate-500 text-sm">
+      CWA AI Knowledge Hub ｜ 交通部中央氣象署 AI 技術應用小組<br>
+      115 年新進人員教育訓練 ｜ 自動化知識轉化專案
+    </p>
+    <p class="text-slate-600 text-xs mt-2">Built with Tailwind CSS · Mermaid.js · Dark Mode</p>
+  </div>
+</footer>
+
+<!-- Search Engine -->
+<script>
+const searchIndex = [
+  { title: '分組一：天氣與氣候預報模型開發', url: 'Group1_Weather_Climate_Prediction/index.html', keywords: 'NWP MLWP Pangu-Weather GraphCast GenCast FourCastNet NeuralGCM Aurora 天氣預報 氣候 Transformer 劉正欽 數值天氣預報 機器學習天氣預報 CWA 雙軌策略 ERA5 ECMWF' },
+  { title: '分組二：海象與氣候應用技術', url: 'Group2_Marine_Climate_Tech/index.html', keywords: 'BMA CorrDiff YOLO 氣候預報 海岸 異常波浪 降尺度 OCP TReAD TaiSA 季節預報 LSTM SVM Random Forest ANN 李清縢 朱啓豪 rogue wave NVIDIA' },
+  { title: '分組三：天氣預報與預警應用技術', url: 'Group3_Warning_Forecasting/index.html', keywords: '颱風 路徑預報 DLTC TCSA 前處理 後處理 QPN MIMQPN DeepQPF Nested-Unet Swin-Transformer GAN WEPS-AI ECDS 黃椿喜 張保亮 定量降水 即時預報' },
+  { title: '分組四：地震預警應用技術', url: 'Group4_Earthquake_Warning/index.html', keywords: 'EEW 地震預警 P波 S波 Phase Picking 震度 邊緣運算 Edge Computing CWBSN TSMIP 陳達毅 波相辨識 資料擴增 花蓮地震 甲仙' },
+  { title: '分組五：天氣監測與應用技術', url: 'Group5_Weather_Monitoring/index.html', keywords: 'DGMR 日射量 對流胞 SCIT 雷達 衛星 降水估計 MOE Diffusion ConvLSTM trajGRU NowcastNet 颱風中心 CRPS 能見度 Sobel 劉豫臻 QPEplus 太陽能 全天空照像儀' },
+  { title: '分組七：資訊系統與開源環境', url: 'Group7_IT_OpenSource/index.html', keywords: 'HPC 高速運算 CPU GPU A64FX A100 InfiniBand NVMe SSD PUE 冷卻 浸沒式液冷 PFlops DDN FEFS 莊惟然 超級電腦 機房' },
+  { title: '分組八：AI 人才培育', url: 'Group8_AI_Talent_Cultivation/index.html', keywords: 'AI人才 培育 培訓 學習地圖 MLOps FCNv2 DWP CNN GAN U-Net Transformer 規劃者 應用者 開發者 陳柏孚 臺大 e等公務園 AI-Ready Data LLM' },
+];
+
+const input = document.getElementById('search-input');
+const resultsBox = document.getElementById('search-results');
+
+input.addEventListener('input', () => {
+  const q = input.value.trim().toLowerCase();
+  if (q.length < 2) { resultsBox.classList.add('hidden'); return; }
+
+  const matches = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(q) || item.keywords.toLowerCase().includes(q)
+  );
+
+  if (matches.length === 0) {
+    resultsBox.innerHTML = '<div class="p-4 text-sm text-slate-500">沒有找到相關結果</div>';
+  } else {
+    resultsBox.innerHTML = matches.map(m =>
+      `<a href="${m.url}" class="block px-4 py-3 hover:bg-slate-800 transition border-b border-slate-800 last:border-0">
+        <div class="text-white font-medium text-sm">${m.title}</div>
+        <div class="text-xs text-slate-500 mt-1 truncate">${m.keywords}</div>
+      </a>`
+    ).join('');
+  }
+  resultsBox.classList.remove('hidden');
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#search-input') && !e.target.closest('#search-results')) {
+    resultsBox.classList.add('hidden');
+  }
+});
+</script>
+</body>
+</html>

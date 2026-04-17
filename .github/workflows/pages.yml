@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          # Copy only deployable files
+          cp main.html _site/index.html
+          cp ai_tech_map_report.md _site/
+          cp anki_terms.csv _site/
+          cp readme.md _site/
+          cp README_HF.md _site/
+          # Copy group pages (only index.html and knowledge.md)
+          for dir in Group*/; do
+            mkdir -p "_site/$dir"
+            [ -f "$dir/index.html" ] && cp "$dir/index.html" "_site/$dir/"
+            [ -f "$dir/knowledge.md" ] && cp "$dir/knowledge.md" "_site/$dir/"
+          done
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

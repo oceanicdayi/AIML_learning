@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地震預警應用技術 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">🔔 地震預警應用技術</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組 4 — 人工智慧於地震預警系統上的應用</h1>
+<blockquote class="my-4"><strong>講者</strong>：陳達毅 科長（中央氣象署 地震測報中心）<br><strong>日期</strong>：2026-04-20<br><strong>投影片數</strong>：18<br><strong>原始檔案</strong>：<code>raw_data/分組4_地震預警應用技術.pptx</code></blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">1 背景與緣起</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">1.1 地震預警系統（EEW）的挑戰</h3>
+<p class="my-3 leading-relaxed">地震預警系統的核心目標是在破壞性 S 波抵達前，提供數秒至數十秒的預警時間。傳統演算法在震度預估的準確性已接近瓶頸，難以進一步提升。</p>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">1.2 案例探討 — 114/11/10 高雄市甲仙區 M5.4 地震</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>項目</th><th>數值</th></tr>
+<tr><td>規模</td><td>M 5.4</td></tr>
+<tr><td>位置</td><td>高雄市甲仙區</td></tr>
+<tr><td>第一報發報時間</td><td>8.3 秒</td></tr>
+<tr><td>第一報預估規模</td><td>M 5.3</td></tr>
+<tr><td>方法</td><td>幾何中心法</td></tr>
+<tr><td><strong>AI 震度 ±1 級準確度</strong></td><td><strong>92 %</strong></td></tr>
+</table></div>
+<blockquote class="my-4"><strong>關鍵發現</strong>：傳統演算法的第一報震度與觀測震度存在明顯差異；導入 AI 後，震度正負 1 級準確度可達 92%。</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">2 資料來源</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">2.1 觀測網</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>觀測網</th><th>說明</th></tr>
+<tr><td><strong>CWBSN</strong></td><td>中央氣象署寬頻地震觀測網（Central Weather Bureau Seismic Network）</td></tr>
+<tr><td><strong>TSMIP</strong></td><td>臺灣強地動觀測網（Taiwan Strong Motion Instrumentation Program），約 550 站</td></tr>
+<tr><td><strong>Real-time TSMIP</strong></td><td>即時強震觀測網，與 CWBSN 整合提供即時波形資料</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">2.2 資料規模</h3>
+<p class="my-3 leading-relaxed">結合 CWBSN 與 real-time TSMIP 之歷史地震波形紀錄，涵蓋全臺約 550 座測站的三分量加速度 / 速度波形。</p>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">3 資料前處理</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">3.1 P 波與 S 波到時標記</h3>
+<p class="my-3 leading-relaxed">由人工標記（human labeling）地震波形中 P 波與 S 波的到時，作為監督式學習的標註資料集。</p>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">3.2 資料擴增（Data Augmentation）</h3>
+<p class="my-3 leading-relaxed">透過資料擴增技術增加資料集的多樣性，提升模型的泛化能力。常見手法包括：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>時間偏移（time shift）</li>
+  <li>添加雜訊（noise injection）</li>
+  <li>振幅縮放（amplitude scaling）</li>
+</ul>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">3.3 資料標準化（Normalization）</h3>
+<p class="my-3 leading-relaxed">對波形資料進行標準化處理，消除不同測站、不同事件之間的量級差異。</p>
+<pre><code class="language-">前處理流程：
+原始波形 → P/S 波到時標記 → 資料擴增 → 標準化 → 模型輸入
+</code></pre>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">4 模型架構及設計理念</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.1 應用方向</h3>
+<p class="my-3 leading-relaxed">AI 在地震預警系統中主要應用於兩大方向：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>方向</th><th>說明</th><th>成熟度</th></tr>
+<tr><td><strong>波相辨識</strong>（Phase Picking）</td><td>自動辨識 P 波、S 波到時</td><td>✅ 已有成果，可導入作業</td></tr>
+<tr><td><strong>震度預估</strong>（Intensity Estimation）</td><td>預測各測站地表加速度 / 震度</td><td>⚠️ 仍需物理機制輔助</td></tr>
+</table></div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.2 模型設計理念</h3>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>利用深度學習模型處理地震波形的時序特徵</li>
+  <li>結合多站資訊進行綜合判斷</li>
+  <li>考慮資料分布不均衡問題（大地震事件稀少）</li>
+</ul>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">4.3 資料分布挑戰</h3>
+<p class="my-3 leading-relaxed">地震規模與震度的資料分布呈現高度不均衡：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>小規模地震（M &lt; 4）事件數極多</li>
+  <li>大規模地震（M ≥ 6）事件數極少</li>
+  <li>模型訓練需特別處理此不平衡問題</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">5 AI 地震預警系統架構</h2>
+</div>
+<pre><code class="language-">
+### 5.1 系統流程
+
+1. **即時波形接收**：CWBSN + real-time TSMIP 測站回傳波形
+2. **AI 波相辨識**：自動偵測 P 波到時，觸發預警計算
+3. **AI 震度預估**：根據早期波形推估各站預測震度
+4. **綜合判定**：整合定位、規模與震度資訊
+5. **預警發布**：向各終端用戶發送警報
+
+---
+
+## 6 評估結果及運作現況
+
+### 6.1 2024/04/03 花蓮地震驗證
+
+以 2024 年 4 月 3 日花蓮大地震為案例進行 AI 模型回溯驗證，展示模型在大規模地震事件中的表現。
+
+### 6.2 運作現況
+
+AI 模型已進入平行測試階段，與傳統演算法同步運行，進行效能比對。
+
+---
+
+## 7 結語與未來發展
+
+### 7.1 三大結論
+
+| # | 結論 | 意涵 |
+|---|------|------|
+| 1 | 機器學習用於**波相辨識**已有一定成果 | 導入作業系統後能**大幅提升作業效率** |
+| 2 | 機器學習用於**震度預估**仍需加入物理機制 | 純數據驅動不足，需結合地震學知識才能有效提升準確性 |
+| 3 | 結合 ML 於地震站進行**邊緣運算** | 縮減資料處理時間，有助於 EEW 發展 |
+
+### 7.2 未來方向
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+flowchart LR
+    A[地震站即時波形<br/>CWBSN + TSMIP] --> B[資料傳輸中心]
+    B --> C{AI 模型推論}
+    C --> D[波相辨識<br/>P/S波自動偵測]
+    C --> E[震度預估<br/>各站預測震度]
+    D --> F[地震定位與規模]
+    E --> F
+    F --> G[預警發布]
+    
+    H[邊緣運算<br/>Edge Computing] -.-> A
+    style H fill:#f9f,stroke:#333
+</div>
+graph TD
+    A[未來發展方向] --&gt; B[波相辨識精進]
+    A --&gt; C[震度預估強化]
+    A --&gt; D[邊緣運算部署]
+    B --&gt; B1[更多標註資料&lt;br/&gt;提高辨識精度]
+    C --&gt; C1[結合物理機制&lt;br/&gt;Physics-informed ML]
+    D --&gt; D1[地震站端運算&lt;br/&gt;減少傳輸延遲]
+</code></pre>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-6" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">8 詞彙表</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>縮寫</th><th>全稱</th><th>中文</th></tr>
+<tr><td>EEW</td><td>Earthquake Early Warning</td><td>地震預警</td></tr>
+<tr><td>CWBSN</td><td>Central Weather Bureau Seismic Network</td><td>中央氣象署寬頻地震觀測網</td></tr>
+<tr><td>TSMIP</td><td>Taiwan Strong Motion Instrumentation Program</td><td>臺灣強地動觀測網</td></tr>
+<tr><td>P 波</td><td>Primary wave</td><td>初達波（縱波）</td></tr>
+<tr><td>S 波</td><td>Secondary wave</td><td>剪力波（橫波）</td></tr>
+<tr><td>Phase Picking</td><td>—</td><td>波相辨識 / 波相到時自動偵測</td></tr>
+<tr><td>Edge Computing</td><td>—</td><td>邊緣運算</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-7" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">9 參考內容</h2>
+</div>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>投影片案例：114/11/10 高雄甲仙 M5.4 地震</li>
+  <li>驗證案例：2024/04/03 花蓮大地震</li>
+  <li>資料來源：CWBSN + real-time TSMIP（~550 站）</li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-8" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">10 總結摘要</h2>
+</div>
+<p class="my-3 leading-relaxed">本簡報由地震測報中心陳達毅科長介紹 AI 在地震預警系統（EEW）的應用。面對傳統演算法於震度預估準確性的瓶頸，團隊利用 CWBSN 與 TSMIP 觀測網約 550 站的歷史波形，經人工標記 P/S 波到時、資料擴增與標準化後訓練深度學習模型。AI 在「波相辨識」已達實用水準，可大幅提升作業效率；在「震度預估」方面則以甲仙 M5.4 地震為例，展示 ±1 級準確度達 92%，但仍需結合物理機制才能進一步提升。未來方向包括 Physics-informed ML 強化震度預測、以及在地震站端部署邊緣運算，縮減資料傳輸延遲，加速預警時效。</p>
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>

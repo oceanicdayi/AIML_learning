@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海象與氣候應用技術 — CWA AI Knowledge Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        cwa: { 50:'#eef7ff', 100:'#d9edff', 200:'#bce0ff', 300:'#8ecdff', 400:'#53b1ff', 500:'#2b91ff', 600:'#1070f5', 700:'#0a5ae1', 800:'#0f49b6', 900:'#12408f', 950:'#0e2a5e' }
+      }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+<style>
+  body { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
+  .prose h2 { scroll-margin-top: 5rem; }
+  .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+  .collapsible-content.open { max-height: 8000px; transition: max-height 0.6s ease-in; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #334155; padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: #1e293b; font-weight: 600; }
+  tr:nth-child(even) { background: rgba(30,41,59,0.3); }
+  blockquote { border-left: 4px solid #2b91ff; padding-left: 1rem; color: #94a3b8; font-style: italic; }
+  code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+  pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  a { color: #53b1ff; text-decoration: underline; }
+  .highlight-box { background: linear-gradient(135deg, #0f2a5e 0%, #12408f 100%); border: 1px solid #2b91ff; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+
+<!-- Top Nav -->
+<nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <span class="text-lg font-bold text-white">🌊 海象與氣候應用技術</span>
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
+  </div>
+</nav>
+
+<!-- Sidebar TOC (desktop) -->
+<aside id="toc" class="hidden lg:block fixed left-0 top-14 w-60 h-[calc(100vh-3.5rem)] overflow-y-auto bg-slate-900/80 border-r border-slate-800 p-4 text-sm">
+  <h3 class="text-xs uppercase tracking-wider text-slate-500 mb-3">目錄</h3>
+  <div id="toc-links" class="space-y-1"></div>
+</aside>
+
+<!-- Main Content -->
+<main class="lg:ml-60 pt-20 pb-16 px-4">
+  <article class="max-w-4xl mx-auto prose prose-invert">
+    <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">分組二：海象與氣候應用技術</h1>
+<blockquote class="my-4"><strong>本分組包含兩份簡報：</strong><br>1. 氣候預報統計/AI 後處理方法（李清縢，海象氣候組/氣候預報科）<br>2. 海岸異常波浪預報系統（朱啓豪科長，海象氣候組/海象發展科）<br><br><strong>時段</strong>：2026/04/20（上午）</blockquote>
+<hr class="border-slate-700 my-8">
+<h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">Part A：氣候預報——統計/AI 後處理方法</h1>
+<blockquote class="my-4"><strong>講者</strong>：李清縢（海象氣候組/氣候預報科）<br><strong>來源</strong>：<code>分組2_海象與氣候應用技術簡報-氣候.pptx</code>（18 頁）</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-1" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">A1. 氣象署氣候預報產品</h2>
+</div>
+<p class="my-3 leading-relaxed">氣象署目前有兩類定期氣候預報產品：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>產品</th><th>發布頻率</th><th>預報範圍</th></tr>
+<tr><td><strong>週預報</strong></td><td>每週五下午</td><td>未來第 1 週、第 2 週、第 1–4 週</td></tr>
+<tr><td><strong>月/季預報</strong></td><td>每月最後一天下午</td><td>未來第 1、第 2、第 3 個月</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-2" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">A2. 氣候預報技術的跨世代演進</h2>
+</div>
+<pre><code class="language-">
+### 氣候預報的挑戰
+
+- **預報誤差（可預報度限制）**：氣候系統的混沌特性
+- **降尺度誤差**：全球模式解析度不足以描述台灣地形
+- 需整合**多國模式資料與多系集成員**（含氣象署自身模式）
+
+---
+
+## A3. 氣候預報產品流程
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+timeline
+    title 氣候預報技術演進（2014–2024）
+    2014 : ENSO 預報指引
+    2016 : 多模式整合預報指引
+         : 綜整歐/美/日/韓多國模式
+    2017 : 氣象署氣候模式（CWACFSv2）
+    2018 : 多國模式圖集
+    2019 : EC 模式預報導入
+    2020 : 導入統計後處理技術（BMA）
+         : 次季節預報指引（季風/MJO/BSISO）
+         : 季節預報指引（副高/春雨/梅雨）
+    2020-2024 : BMA 預報指引精進（含 EC）
+    2023 : 臺灣區域氣候分析
+    2024 : 高解析度展期統計後處理預報
+         : 極端溫度及降雨預報指引
+         : 開發降尺度及偏差修正技術
+</div>
+graph LR
+    A[多模式原始預報&lt;br/&gt;Global/Regional] --&gt; B[Statistical Post-Process&lt;br/&gt;降尺度/偏差修正]
+    B --&gt; C[縣市/鄉鎮&lt;br/&gt;三分類機率預報]
+    C --&gt; D[跨域預報產品]
+    
+    style B fill:#4a90d9,color:#fff
+</code></pre>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">跨域服務需求</h3>
+<p class="my-3 leading-relaxed">氣候預報需服務多個領域，每個領域關注不同的氣象變數：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>應用領域</th><th>關注的氣象變數</th></tr>
+<tr><td><strong>水文 (Hydrology)</strong></td><td>乾旱、極端降雨、颱風、暴雨</td></tr>
+<tr><td><strong>農業 (Agriculture)</strong></td><td>低溫、高溫、強風</td></tr>
+<tr><td><strong>綠能 (Green Energy)</strong></td><td>風速、風向、日照、雲量</td></tr>
+<tr><td><strong>漁業 (Fishery)</strong></td><td>低溫</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed">具體產品如：<strong>水庫集水區雨量預報</strong>等。</p>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-3" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">A4. 統計後處理方法——BMA（Bayesian Model Averaging）</h2>
+</div>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">客觀綜合後處理方法 (OCP) 降尺度預報流程</h3>
+<p class="my-3 leading-relaxed">BMA 方法整合多個模式的預報結果，賦予每個模式基於歷史表現的權重：</p>
+<pre><code class="language-">
+- **BMA (Bayesian Model Averaging)**：基於貝葉斯統計的模式平均方法
+- 每個模式根據其歷史預報技巧獲得不同權重
+- **降水驗證 (RPSS)** 顯示 BMA 整合後優於任何單一模式
+
+---
+
+## A5. AI 降尺度方法——CorrDiff（Generative Correction Diffusion Model）
+
+### A5.1 CorrDiff 概述
+
+CorrDiff 是 **NVIDIA 與氣象署合作開發**的生成式擴散模型降尺度方法：
+
+| 項目 | 全球資料 (Input) | 區域資料 (Target) |
+|------|-----------------|-------------------|
+| **資料集** | ERA5 再分析 | CWA RWRF 分析 |
+| **解析度** | 25 km | 2 km |
+| **變數** | 850/500-hPa U, V, T, Height; U10, V10, T2, CWV | U10, V10, T2, 最大雷達回波 |
+
+&gt; **論文**：Morteza Mardani et al. (2025). *Residual corrective diffusion modeling for km-scale atmospheric downscaling.* Nature Communications Earth &amp; Environment. doi:10.1038/s43247-025-02042-5
+
+&gt; **亮點**：於 **COMPUTEX 2024** 展示颱風凱米 (Gaemi) 的 CorrDiff 降尺度預報。
+
+### A5.2 最佳化 CorrDiff 模組
+
+**合作單位**：氣象署 (CWA) × 台灣師範大學 (NTNU) × 台灣大學 (NTU) × NVIDIA
+
+| 訓練資料 | 空間解析度 | 訓練期 | 測試期 | 地面變數 | 高空變數 |
+|---------|----------|--------|--------|---------|---------|
+| **ERA5** (Global) | 25 km | 1991–2015 | 2016–2023 | 降水, T2M, U10M, V10M | 850/500-hPa U, V, T, Q, Z |
+| **TReAD** (Regional) | 2 km | 1991–2015 | 2016–2023 | 降水, T2M, U10M, V10M | — |
+| **TaiSA** (Regional) | 1 km | 1998–2015 | 2016–2023 | 降水, T2M | — |
+
+### A5.3 台灣高解析網格資料
+
+| 資料集 | 說明 | 解析度 | 時間範圍 |
+|-------|------|--------|---------|
+| **TReAD** (Taiwan Re-Analysis Downscaling) | 使用 WRF 模式從 ERA5 動力降尺度 | 2 km, 逐時 | 1979–2023 (45 年) |
+| **TaiSA** (Taiwan Station-based Analysis) | 使用統計方法將測站資料轉為網格資料 | 1 km, 逐時 | 1998–2023 (25 年) |
+
+| | TReAD | TaiSA |
+|---|-------|-------|
+| **優勢** | 動力一致性，包含模式狀態變數，涵蓋 45 年 | 網格化觀測資料，氣候一致性（地面真值） |
+| **限制** | WRF 動力降尺度，非地面真值 | 僅地面變數、僅陸地 |
+
+&gt; **TReAD 資料下載**：https://data.depositar.io/en/dataset/tread
+
+### A5.4 CorrDiff 敏感度實驗
+
+測試不同輸入變數組合對降尺度品質的影響：
+
+| 實驗 | Global 輸入 | Regional 輸出 | 結果 |
+|------|-----------|--------------|------|
+| P2P | 僅降水 | 降水 | 基線 |
+| SF2P | 降水+地面變數 | 降水 | 改善 |
+| 3D2P | 降水+地面+高空 | 降水 | 更佳 |
+| **3D2All** | 降水+地面+高空 | 降水+地面全變數 | **最佳（RMSE 最小）** |
+
+&gt; **結論**：3D2All 配置的空間降尺度正確性最高。CorrDiff 模型有潛力改善相對於 ERA5 原始輸入的空間降雨準確度。
+
+### A5.5 CorrDiff 應用於預報降尺度
+
+#### 結合展期模式 (GEPSv2)
+- CorrDiff 降尺度後的 GEPS 預報在東部地區強化了降水信號（4 天、8 天前置時間）
+- 但 12 天前置時間無降水信號
+- **需要偏差修正**（GEPSv2 → ERA5）
+
+#### 結合氣候模式 (SEAS5)
+- 一個月前置時間的 CorrDiff 預報能指出東台灣的強降水
+- **問題**：山區有濕偏差 (wet bias)
+- **需要偏差修正**（SEAS5 → ERA5）
+
+### A5.6 現行 CorrDiff 的待解決問題
+
+1. 僅使用 **4 年資料**訓練（不足）
+2. **沒有雨量變數場直接輸出**
+3. **無高解析地形資料**
+
+---
+
+## A6. 統計後處理的下一步：偏差修正
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph TD
+    A[EC 模式<br/>fields/indices] --> D[Statistical Post-Process<br/>BMA-based]
+    B[CWACFSv2 模式<br/>fields/indices] --> D
+    C[CFSv2 模式<br/>fields/indices] --> D
+    D --> E[BMA-based MME<br/>多模式系集平均]
+    E --> F[降尺度預報產品]
+</div>
+graph LR
+    A[多模式原始預報&lt;br/&gt;多系集成員] --&gt; B[偏差修正&lt;br/&gt;Bias Correction]
+    B --&gt; C[CorrDiff 降尺度]
+    C --&gt; D[縣市/鄉鎮&lt;br/&gt;三分類機率預報]
+    D --&gt; E[跨域預報產品]
+</code></pre>
+<p class="my-3 leading-relaxed">未來目標是將統計後處理方法與 AI 降尺度（CorrDiff）整合，達成<strong>氣候預報精緻化</strong>：</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li>以屏東縣為例：溫度機率預報可細化至「偏低 0% / 正常 30% / 偏高 70%」，並標示氣候正常範圍（如 20.6~21.4°C）</li>
+</ul>
+<hr class="border-slate-700 my-8">
+<h1 class="text-3xl md:text-4xl font-bold text-white mb-6 mt-2">Part B：海岸異常波浪（瘋狗浪）預報系統</h1>
+<blockquote class="my-4"><strong>講者</strong>：朱啓豪 科長（海象氣候組/海象發展科）<br><strong>來源</strong>：<code>新人訓練-海岸異常波浪-20260323.pptx</code>（20 頁）</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-4" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B1. 什麼是海岸異常波浪（瘋狗浪）？</h2>
+</div>
+<p class="my-3 leading-relaxed"><strong>定義</strong>：海岸邊突然出現的巨大浪花，是<strong>波浪與地形、礁岩、防波堤等結構物交互作用</strong>的結果，常將人車沖入海中造成傷亡。</p>
+<ul class="list-disc list-inside space-y-1 my-3">
+  <li><strong>統計</strong>：民國 89–114 年 11 月間，共蒐集 <strong>445 件</strong>海岸瘋狗浪事件，<strong>778 人落海</strong></li>
+  <li><strong>核心困難</strong>：截至目前，瘋狗浪的發生<strong>尚無法以理論公式預測何時、何地會發生</strong> → 需利用 <strong>AI</strong></li>
+</ul>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-5" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B2. 系統架構</h2>
+</div>
+<pre><code class="language-">
+### 運作規格
+
+| 項目 | 規格 |
+|------|------|
+| 執行頻率 | 每日 4 次（UTC 00, 06, 12, 18） |
+| 預警時距 | 未來 12、18、24 小時 |
+| 風險等級 | &lt; 50%（低）/ 50–70%（中）/ &gt; 70%（高） |
+| 預報系統數 | **16 套** |
+| 監測站數 | **21 站** |
+
+---
+
+## B3. 影像辨識技術
+
+### B3.1 二值化法（傳統物理方法）
+
+<div class="mermaid my-6 bg-slate-900 p-4 rounded-lg overflow-x-auto">
+graph LR
+    A[影像監測站] --> B[影像辨識<br/>二值化法 / YOLO]
+    B --> C[異常浪案例庫]
+    C --> D[AI 模型訓練]
+    E[實測海氣象資料] --> D
+    F[波浪模式預報資料] --> D
+    D --> G[瘋狗浪機率預報]
+    G --> H[風險等級產品]
+</div>
+原始影像 → 二值轉換 + 影像銳化 → 邊緣偵測 + 去雜訊 → 浪花邊界 → 浪花參數計算
+</code></pre>
+<h4 class="text-lg font-medium text-slate-200 mt-6 mb-2">浪花參數與危害判定</h4>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>參數</th><th>定義</th></tr>
+<tr><td><strong>浪花高度 (H_CFW)</strong></td><td>自浪花邊緣偵測獲得</td></tr>
+<tr><td><strong>浪花單位寬度瞬時流量 (Q_CFW)</strong></td><td>對瞬時浪花水量微分</td></tr>
+<tr><td><strong>浪花平均速度 (u_CFW)</strong></td><td>瞬時流量 ÷ 浪花高度</td></tr>
+</table></div>
+<p class="my-3 leading-relaxed"><strong>危害度判定公式</strong> (Penning-Rowsell et al., 2005)：</p>
+<p class="my-3 leading-relaxed">$$FH = h \times (v + 0.5) + DF$$</p>
+<p class="my-3 leading-relaxed">其中 $h$ 為水深、$v$ 為流速、$DF$ 為其他影響因子。</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>Flood Hazard (FH)</th><th>危害程度</th></tr>
+<tr><td>FH &lt; 0.75</td><td>低危害</td></tr>
+<tr><td>FH &gt; 1.5</td><td>具危害性</td></tr>
+<tr><td>FH &gt; 2.5</td><td>非常危險</td></tr>
+</table></div>
+<blockquote class="my-4"><strong>系統採用 FH &gt; 1.5 作為瘋狗浪判定準則</strong>（Ramsbottom, 2006）</blockquote>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">B3.2 YOLO 物件偵測（AI 方法）</h3>
+<p class="my-3 leading-relaxed">從傳統影像分析<strong>轉進</strong>至 YOLO 智慧 AI 判識：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>特性</th><th>說明</th></tr>
+<tr><td>架構</td><td>單一卷積神經網路 (CNN)，將影像切成多個網格</td></tr>
+<tr><td>版本</td><td><strong>YOLOv7</strong>（測試更新版本後發現無顯著加速且增加標記成本）</td></tr>
+<tr><td>速度</td><td>比二值化法快 <strong>10–100 倍</strong></td></tr>
+<tr><td>能力</td><td>已具備<strong>即時辨識動態影片</strong>能力</td></tr>
+</table></div>
+<blockquote class="my-4"><strong>流程</strong>：二值法找案例 (FH &gt; 1.5) → 案例訓練 YOLO 模型 → 完成訓練開始使用</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-6" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B4. 案例蒐集成果</h2>
+</div>
+<p class="my-3 leading-relaxed">全台 18 個監測站累積的異常波浪案例數：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>測站</th><th>所屬區域</th><th>累積案例數</th></tr>
+<tr><td><strong>龍洞</strong></td><td>新北市東</td><td><strong>20,086</strong></td></tr>
+<tr><td><strong>野柳</strong></td><td>新北市西</td><td><strong>8,578</strong></td></tr>
+<tr><td>富岡</td><td>台東縣</td><td>7,314</td></tr>
+<tr><td>碧砂</td><td>基隆市</td><td>5,790</td></tr>
+<tr><td>石梯</td><td>花蓮縣</td><td>3,931</td></tr>
+<tr><td>和平島</td><td>基隆市</td><td>2,268</td></tr>
+<tr><td>西子灣</td><td>高雄市</td><td>1,574</td></tr>
+<tr><td>永安</td><td>桃園市</td><td>1,243</td></tr>
+<tr><td>安平</td><td>台南市</td><td>740</td></tr>
+<tr><td>台中港</td><td>台中市</td><td>399</td></tr>
+<tr><td>內埤</td><td>宜蘭縣</td><td>259</td></tr>
+<tr><td>烏石</td><td>宜蘭縣</td><td>173</td></tr>
+<tr><td>箔子寮</td><td>雲林縣</td><td>172</td></tr>
+<tr><td>海興</td><td>屏東縣</td><td>161</td></tr>
+<tr><td>布袋</td><td>嘉義縣</td><td>82</td></tr>
+<tr><td>新竹港</td><td>新竹縣</td><td>71</td></tr>
+<tr><td>外埔</td><td>苗栗縣</td><td>62</td></tr>
+<tr><td>彰濱</td><td>彰化縣</td><td>49</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-7" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B5. AI 預報方法</h2>
+</div>
+<p class="my-3 leading-relaxed">系統使用四種 AI 方法進行機率預報：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>方法</th><th>英文</th><th>核心特性</th></tr>
+<tr><td><strong>類神經網路</strong></td><td>ANN (Artificial Neural Network)</td><td>多層互連神經元，強大的非線性擬合能力，黑箱模型</td></tr>
+<tr><td><strong>隨機森林</strong></td><td>RF (Random Forest)</td><td>基於決策樹的集成學習，自助抽樣+隨機特徵，抗過擬合</td></tr>
+<tr><td><strong>支撐向量機</strong></td><td>SVM (Support Vector Machine)</td><td>核函數技巧將低維映射至高維，找最優超平面</td></tr>
+<tr><td><strong>長短期記憶網路</strong></td><td>LSTM (Long Short-Term Memory)</td><td>門控機制控制訊息保留/遺忘，捕捉長時序依賴關係</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-8" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B6. 預報驗證成果</h2>
+</div>
+<p class="my-3 leading-relaxed">114 年 1–10 月各子系統預報驗證結果：</p>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>子系統</th><th>正確率</th></tr>
+<tr><td>台南安平</td><td><strong>88.2%</strong></td></tr>
+<tr><td>台中台中港</td><td>86.4%</td></tr>
+<tr><td>高雄西子灣</td><td>85.8%</td></tr>
+<tr><td>花蓮石梯</td><td>85.1%</td></tr>
+<tr><td>桃園永安</td><td>83.2%</td></tr>
+<tr><td>基隆碧砂</td><td>82.8%</td></tr>
+<tr><td>台東富岡</td><td>82.8%</td></tr>
+<tr><td>屏東興海</td><td>82.6%</td></tr>
+<tr><td>雲林萡子寮</td><td>81.4%</td></tr>
+<tr><td>嘉義布袋</td><td>81.1%</td></tr>
+<tr><td>新北龍洞</td><td>79.7%</td></tr>
+<tr><td>新北野柳</td><td>77.3%</td></tr>
+<tr><td>宜蘭內埤</td><td>69.2%</td></tr>
+</table></div>
+<blockquote class="my-4"><strong>各子系統整體預報正確率皆有約 7 成以上</strong>，顯示預警資訊具可信度。</blockquote>
+<h3 class="text-xl font-semibold text-slate-100 mt-8 mb-3">實際案例驗證</h3>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>事件</th><th>預報機率</th></tr>
+<tr><td>2024/11/16 基隆嶼瘋狗浪</td><td><strong>88.3%</strong></td></tr>
+<tr><td>2025/01/15 花蓮石梯坪瘋狗浪</td><td><strong>91.2%</strong></td></tr>
+</table></div>
+<blockquote class="my-4">發布<strong>高風險</strong>警戒時段 <strong>90%</strong> 有瘋狗浪影像紀錄；<strong>中風險</strong>時段 <strong>58%</strong> 有記錄。</blockquote>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-9" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B7. 產品推廣與合作</h2>
+</div>
+<div class="overflow-x-auto my-4"><table>
+<tr><th>推廣方式</th><th>合作單位</th></tr>
+<tr><td><strong>LINE 推播</strong></td><td>新北市政府消防局</td></tr>
+<tr><td><strong>官網置入</strong></td><td>東北角及宜蘭海岸國家風景區管理處</td></tr>
+<tr><td><strong>電子看板</strong></td><td>北海岸及觀音山國家風景區管理處</td></tr>
+<tr><td><strong>合作建站</strong></td><td>臺灣港務股份有限公司</td></tr>
+</table></div>
+<hr class="border-slate-700 my-8">
+
+<div class="mt-12 mb-4">
+  <h2 id="section-10" class="text-2xl font-bold text-cwa-400 border-b border-slate-700 pb-2">B8. 系統總結</h2>
+</div>
+<pre><code class="language-">
+### 未來工作
+
+1. **精進預報準確度**
+2. **建立整合監控系統**
+3. **跨域合作**：觀光署、新北市政府、臺灣港務、海巡署
+4. **科普教育**：海象百問、報氣候短知識影片、YouTube 觀測直播
+
+---
+
+# 關鍵術語表 (Glossary)
+
+| 術語 | 英文 | 說明 |
+|------|------|------|
+| BMA | Bayesian Model Averaging | 貝葉斯模式平均，依歷史表現加權整合多模式預報 |
+| OCP | Objective Comprehensive Post-processing | 客觀綜合後處理方法 |
+| CorrDiff | Corrective Diffusion Model | 生成式修正擴散模型，用於空間降尺度 |
+| RPSS | Ranked Probability Skill Score | 評估分類機率預報的技巧分數 |
+| ERA5 | ECMWF Reanalysis v5 | ECMWF 第五代全球再分析資料（25 km） |
+| TReAD | Taiwan Re-Analysis Downscaling | 台灣再分析降尺度資料（WRF, 2 km, 1979–2023） |
+| TaiSA | Taiwan Station-based Analysis | 台灣測站分析網格資料（1 km, 1998–2023） |
+| SEAS5 | Seasonal Forecast System 5 | ECMWF 第五代季節預報系統 |
+| GEPSv2 | Global Ensemble Prediction System v2 | 全球系集預報系統第二版 |
+| CWACFSv2 | CWA Climate Forecast System v2 | 氣象署氣候預報系統第二版（海氣耦合模式） |
+| MJO | Madden-Julian Oscillation | 乃赤道地區 30–60 天振盪，影響次季節預報 |
+| BSISO | Boreal Summer Intraseasonal Oscillation | 北半球夏季季內振盪 |
+| ENSO | El Niño–Southern Oscillation | 聖嬰–南方振盪，最重要的季節氣候預報因子 |
+| FH | Flood Hazard | 洪水危害指標（判定瘋狗浪危害度） |
+| YOLO | You Only Look Once | 單次推論物件偵測演算法（目前使用 v7） |
+| ANN | Artificial Neural Network | 人工類神經網路 |
+| RF | Random Forest | 隨機森林（集成學習） |
+| SVM | Support Vector Machine | 支撐向量機 |
+| LSTM | Long Short-Term Memory | 長短期記憶神經網路（時序預測） |
+| WRF | Weather Research and Forecasting | 天氣研究與預報模式（動力降尺度使用） |
+
+---
+
+# 參考文獻
+
+- Morteza Mardani et al. (2025). *Residual corrective diffusion modeling for km-scale atmospheric downscaling.* Nature Communications Earth &amp; Environment. doi:10.1038/s43247-025-02042-5
+- Penning-Rowsell, E. C. et al. (2005). *The benefits of flood and coastal risk management: a handbook of assessment techniques.*
+- Ramsbottom, D. et al. (2006). *Flood risks to people: Phase 2 — guidance document.*
+- TCCIP Newsletter NO.019：颱風與農業損失之跨年代變遷趨勢研究
+
+---
+
+# 學習重點總結
+
+### Part A 氣候預報三個核心要點
+
+1. **氣候預報靠多模式整合**——BMA 將歐美日韓+氣象署模式的預報加權平均，優於任何單一模式
+2. **AI 降尺度 (CorrDiff) 是下一代方向**——將 25 km 全球資料降至 2 km，但目前仍需偏差修正
+3. **台灣有獨特的高解析資料優勢**——TReAD（45 年 2 km）與 TaiSA（25 年 1 km）是訓練 AI 的寶貴資產
+
+### Part B 海岸異常波浪三個核心要點
+
+1. **瘋狗浪無法用物理公式預測**——必須仰賴 AI 方法（ANN/RF/SVM/LSTM）從歷史案例學習
+2. **YOLO 影像辨識是關鍵突破**——比傳統二值化法快 10–100 倍，已能即時辨識動態影片
+3. **系統已實際運作並具高準確度**——16 套系統、21 站監測，平均正確率 &gt; 77%，高風險準確率達 90%
+
+
+  </article>
+</main>
+
+<!-- Back to top -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-cwa-700 hover:bg-cwa-600 text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition text-lg">↑</button>
+
+<script>
+// Build TOC from h2 elements
+document.addEventListener('DOMContentLoaded', () => {
+  const tocBox = document.getElementById('toc-links');
+  document.querySelectorAll('article h2').forEach((h2, i) => {
+    if (!h2.id) h2.id = 'section-' + i;
+    const a = document.createElement('a');
+    a.href = '#' + h2.id;
+    a.textContent = h2.textContent;
+    a.className = 'block py-1 px-2 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition truncate';
+    tocBox.appendChild(a);
+  });
+
+  // Collapsible sections
+  document.querySelectorAll('.collapsible-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      target.classList.toggle('open');
+      btn.querySelector('.chevron').textContent = target.classList.contains('open') ? '▾' : '▸';
+    });
+  });
+});
+</script>
+</body>
+</html>
