@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir -p _site
           # Copy only deployable files
-          cp main.html _site/index.html
+          cp index.html _site/index.html
           cp ai_tech_map_report.md _site/
           cp anki_terms.csv _site/
           cp readme.md _site/

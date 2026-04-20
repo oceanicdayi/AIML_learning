@@ -65,7 +65,7 @@ tailwind.config = {{
 <!-- Top Nav -->
 <nav class="fixed top-0 w-full z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
   <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-    <a href="../main.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
+    <a href="../index.html" class="text-sm text-slate-400 hover:text-white transition">← 返回學習地圖</a>
     <span class="text-lg font-bold text-white">{emoji} {short_title}</span>
     <button onclick="document.documentElement.classList.toggle('dark')" class="text-sm px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 transition">🌓</button>
   </div>

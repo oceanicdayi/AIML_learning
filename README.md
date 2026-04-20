@@ -63,7 +63,7 @@ hardware: zero-a10g
     - 使用 Dark Mode 風格，符合氣象署專業形象。
 
 ### Phase 4: 彙整門戶 (Portal Dashboard)
-- [ ] 在根目錄製作 `main.html`。
+- [ ] 在根目錄製作 `index.html`。
 - [ ] 採用學習地圖 (Learning Map) 或時間軸形式，連結至所有分組的 HTML 頁面。
 - [ ] 加入全站搜尋功能（基於生成的 Markdown 內容）。
 
